@@ -1,10 +1,12 @@
+@import 'variables';
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font1;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #f2f2f2;
-  background-color: #242424;
+  color: $color-wb4;
+  background-color: $color-wb1;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -12,17 +14,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+*,
+*::before,
+*::after {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #242424;
-    background-color: #f2f2f2;
+    color: $color-wb1;
+    background-color: $color-wb4;
   }
 }
+
+@import 'layout';
+@import 'header';
+@import 'side-panel';
+@import 'home';
+@import 'edit';
+@import 'update';

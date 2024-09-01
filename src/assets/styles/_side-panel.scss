@@ -23,6 +23,7 @@
       margin-top: 2px;
     }
     &.users-btn {
+      cursor: pointer;
       img {
         transform: rotate(90deg);
         transition: transform 0.2s ease-in-out;

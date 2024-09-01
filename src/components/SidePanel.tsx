@@ -1,5 +1,5 @@
 const SidePanel = (): JSX.Element => {
-  return <div>SidePanel</div>
+  return <div className="side-panel">SidePanel</div>
 }
 
 export default SidePanel

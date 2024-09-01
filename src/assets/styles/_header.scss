@@ -1,0 +1,109 @@
+header {
+  grid-area: header;
+  background-color: $color-wb3;
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  color: $color-wb4;
+  a {
+    height: 100%;
+    img {
+      height: 100%;
+    }
+  }
+  nav {
+    position: relative;
+    height: 36px;
+    .dropdown-btn {
+      padding: 6px;
+      border-radius: $border-radius $border-radius 0 0;
+    }
+    .dropdown-cont {
+      width: 150px;
+      background-color: $color-wb2;
+      position: absolute;
+      top: 90%;
+      right: 0;
+      border-radius: $border-radius 0 $border-radius $border-radius;
+      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      font-variant: small-caps;
+      button,
+      >a {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        font-size: 1rem;
+        text-transform: capitalize;
+        font-variant: small-caps;
+        text-decoration: none;
+        img {
+          height: 28px;
+          margin-top: 2px;
+        }
+        &.users-btn {
+          img {
+            transform: rotate(90deg);
+            transition: transform 0.2s ease-in-out;
+          }
+          &.inactive img {
+            transform: rotate(0deg);
+          }
+        }
+      }
+      .user-list {
+        display: flex;
+        flex-direction: column;
+        padding: 0 28px;
+        .user-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 100%;
+        }
+      }
+    }
+    &::before {
+      position: absolute;
+      bottom: calc(10% - 2px);
+      right: calc(100% - 2px);
+      width: $border-radius * 2;
+      height: $border-radius * 2;
+      background-color: $color-wb2;
+    }
+    &::after {
+      position: absolute;
+      bottom: 10%;
+      right: 100%;
+      width: $border-radius * 2;
+      height: $border-radius * 2;
+      border-radius: 50%;
+      background-color: $color-wb3;
+    }
+    &.active {
+      .dropdown-btn {
+        background-color: $color-wb2;
+      }
+      &::before,
+      &::after {
+        content: '';
+      }
+    }
+  }
+}
+
+@media screen and (width >= 768px) {
+  header {
+    justify-content: center;
+    nav {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.side-panel {
+  grid-area: side-panel;
+  display: none;
+  background-color: green;
+}
+
+@media screen and (width >= 768px) {
+  .side-panel {
+    display: block;
+  }
+}

@@ -10,7 +10,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     <>
       <Header />
       <SidePanel />
-      {children}
+      <main>{children}</main>
     </>
   )
 }

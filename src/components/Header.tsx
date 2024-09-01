@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from '../assets/images/logo.svg'
 import Menu from '../assets/images/menu-header.svg'
 import MenuAux from '../assets/images/menu-header-aux.svg'
 import Plus from '../assets/images/plus.svg'
 import Right from '../assets/images/chevron-right.svg'
 import Pencil from '../assets/images/pencil.svg'
-import { Link, useLocation } from 'react-router-dom'
 
 const Header = (): JSX.Element => {
   const [dropdown, setDropdown] = useState(false)

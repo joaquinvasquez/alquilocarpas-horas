@@ -2,14 +2,13 @@
   height: 100vh;
   main {
     grid-area: main;
-    background-color: rebeccapurple;
   }
 }
 
 @media screen and (width >= 768px) {
   #root {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 240px 1fr;
     grid-template-rows: $header-height 1fr;
     grid-template-areas:
       'header header'

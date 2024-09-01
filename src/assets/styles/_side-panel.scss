@@ -1,11 +1,52 @@
 .side-panel {
   grid-area: side-panel;
   display: none;
-  background-color: green;
+  padding-left: 16px;
+  flex-direction: column;
+  font-variant: small-caps;
+  background-color: $color-wb0;
+  button,
+  > a {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-variant: small-caps;
+    text-decoration: none;
+    img {
+      height: 28px;
+      margin-top: 2px;
+    }
+    &.users-btn {
+      img {
+        transform: rotate(90deg);
+        transition: transform 0.2s ease-in-out;
+      }
+      &.inactive img {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 28px;
+    .user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+  }
 }
 
 @media screen and (width >= 768px) {
   .side-panel {
-    display: block;
+    display: flex;
   }
 }

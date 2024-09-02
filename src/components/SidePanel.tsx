@@ -15,7 +15,7 @@ const SidePanel = (): JSX.Element => {
   return (
     <div className="side-panel">
       <button
-        className="users-btn"
+        className="users-btn  btn-clear"
         onClick={handleUsersDropdown}
         ref={refButtonUsers}
       >
@@ -44,7 +44,7 @@ const SidePanel = (): JSX.Element => {
           </span>
         </div>
       )}
-      <Link to="/edit/new">
+      <Link to="/edit/new" className="btn-clear">
         <img src={Plus} alt="menu button" />
         usuario
       </Link>

@@ -52,7 +52,7 @@ const Header = (): JSX.Element => {
         {dropdown && (
           <div className="dropdown-cont">
             <button
-              className="users-btn"
+              className="users-btn btn-clear"
               onClick={handleUsersDropdown}
               ref={refButtonUsers}
             >
@@ -81,7 +81,7 @@ const Header = (): JSX.Element => {
                 </span>
               </div>
             )}
-            <Link to="/edit/new">
+            <Link to="/edit/new" className="btn-clear">
               <img src={Plus} alt="menu button" />
               usuario
             </Link>

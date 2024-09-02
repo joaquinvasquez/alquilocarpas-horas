@@ -1,5 +1,4 @@
 #root {
-  height: 100vh;
   main {
     grid-area: main;
   }
@@ -7,6 +6,7 @@
 
 @media screen and (width >= 768px) {
   #root {
+    height: 100vh;
     display: grid;
     grid-template-columns: 240px 1fr;
     grid-template-rows: $header-height 1fr;

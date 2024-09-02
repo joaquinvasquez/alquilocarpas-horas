@@ -1,0 +1,34 @@
+.time-picker {
+  width: 118px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid $color-wb3;
+  border-radius: $border-radius;
+  font-size: 1.5rem;
+  input {
+    width: 40px !important;
+    padding: 8px 0 !important;
+    border: none !important;
+    text-align: center;
+    &:focus {
+      outline: none;
+    }
+    &#hours {
+      flex-grow: 1;
+    }
+  }
+  span {
+    width: 6px;
+    margin-top: -8px;
+  }
+  label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2px 0 0 !important;
+    img {
+      cursor: pointer;
+    }
+  }
+}

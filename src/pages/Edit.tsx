@@ -34,7 +34,7 @@ const Edit = (): JSX.Element => {
 
   return (
     <div className="edit">
-      {userId !== 'new' ? <h1>Editar</h1> : <h1>Nuevo</h1>}
+      {userId !== 'new' ? <h1>Editar {userId}</h1> : <h1>Nuevo</h1>}
       <div className="input-group">
         <label htmlFor="name">Nombre</label>
         <input type="text" id="name" />

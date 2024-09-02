@@ -1,5 +1,8 @@
+import { useParams } from 'react-router-dom'
+
 const Update = (): JSX.Element => {
-  return <div>Update</div>
+  const { userKey } = useParams()
+  return <div>Update {userKey}</div>
 }
 
 export default Update

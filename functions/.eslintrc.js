@@ -11,7 +11,6 @@ module.exports = {
     'plugin:import/typescript',
     'google',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,8 +22,9 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'semi': ['error', 'never'],
+    semi: ['error', 'never'],
     'object-curly-spacing': ['error', 'always'],
+    'linebreak-style': ['error', 'never'],
   },
   settings: {
     'import/resolver': {

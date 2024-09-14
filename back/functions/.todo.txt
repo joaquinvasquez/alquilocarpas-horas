@@ -1,0 +1,5 @@
+.TODO:
+despliegue functions firebase ✅
+programa arduino
+refactor api
+terminar y refactor front

@@ -1,0 +1,9 @@
+{
+	"javascript": {
+		"formatter": {
+			"jsxQuoteStyle": "single",
+			"semicolons": "asNeeded",
+			"trailingCommas": "none"
+		}
+	}
+}

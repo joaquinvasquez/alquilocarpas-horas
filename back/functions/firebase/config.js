@@ -1,7 +1,8 @@
-import { initializeApp, credential as _credential } from 'firebase-admin'
+import admin from "firebase-admin"
+import serviceAccount from "./permissions.json" with { type: "json" }
 
-import serviceAccount from './permissions.json'
-
-initializeApp({
-  credential: _credential.cert(serviceAccount),
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount)
 })
+
+export const db = admin.firestore()

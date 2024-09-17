@@ -1,10 +1,4 @@
-import admin from "firebase-admin"
-import serviceAccount from "../firebase/permissions.json" with { type: "json" }
-
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount)
-})
-const db = admin.firestore()
+import { db } from "../firebase/config"
 
 export const KeyFirebaseModel = {
 	getLastReaded: async () => {
@@ -53,6 +47,6 @@ export const KeyFirebaseModel = {
 				is_active: true,
 				last_reading: new Date(Date.now())
 			})
-			return { action: "hello" }
+		return { action: "hello" }
 	}
 }

@@ -5,4 +5,6 @@ admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount)
 })
 
-export const db = admin.firestore()
+const db = admin.firestore()
+
+export { db }

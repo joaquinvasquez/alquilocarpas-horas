@@ -4,6 +4,7 @@ import { corsMiddleware, corsPreflightMiddleware } from "./middlewares/cors.js"
 import { usersRouter } from "./router/users.js"
 import { keyRouter } from "./router/keys.js"
 import { errorHandler } from "./middlewares/errorHandler.js"
+import { dailyCheck } from "./scheduled/daily-check.js"
 
 const app = express()
 
@@ -27,3 +28,7 @@ app.use(errorHandler)
 
 export const api = functions.https.onRequest(app)
 
+export const everyNight = functions.scheduler.onSchedule(
+	"59 02 * * 1-5", // at 23:59 from Monday to Friday (UTC)
+	dailyCheck
+)

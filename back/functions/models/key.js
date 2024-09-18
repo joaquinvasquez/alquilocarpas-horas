@@ -1,6 +1,6 @@
-import { db } from "../firebase/config"
+import { db } from "../firebase/config.js"
 
-export const KeyFirebaseModel = {
+export const KeyModel = {
 	getLastReaded: async () => {
 		const lastReaded = await db
 			.collection("last-readed")

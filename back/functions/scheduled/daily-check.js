@@ -50,13 +50,13 @@ export const dailyCheck = functions.scheduler.onSchedule(
 							.collection("users")
 							.doc(user.id)
 							.update({
-								minutes: user.minutes - user.weekly_hours * 60
+								minutes: user.minutes - user.daily_hours * 60
 							})
 						const mailOptions = {
 							from: "joaquinvasquez20@gmail.com",
 							to: "joaquinvasquez20@gmail.com",
 							subject: `LectorID - ${user.name} hoy no trabajó`,
-							text: `El usuario [${user.name}] hoy no fichó. Ya se le descontaron las horas de hoy (${user.weekly_hours}), en caso de que sea un error, hay que sumar manualmente el tiempo que trabajó hoy + lo que se descontó automáticamente (${user.weekly_hours}).`
+							text: `El usuario [${user.name}] hoy no fichó. Ya se le descontaron las horas de hoy (${user.daily_hours}), en caso de que sea un error, hay que sumar manualmente el tiempo que trabajó hoy + lo que se descontó automáticamente (${user.daily_hours}).`
 						}
 						transporter.sendMail(mailOptions, (error, info) => {
 							if (error) {

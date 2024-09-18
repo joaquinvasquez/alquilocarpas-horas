@@ -1,84 +1,82 @@
+import { UserModel } from "../models/user.js"
+import {
+	validateId,
+	validateNewUser,
+	validateUser
+} from "../schemas/validation.js"
+
 export const UserController = {
-	getAllUsers: async (req, res) => {
+	getAllUsers: async (req, res, next) => {
 		try {
-			const users = []
-			const querySnapshot = await db.collection("users").get()
-			for (const doc of querySnapshot.docs) {
-				doc.data().enabled &&
-					users.push({
-						id: doc.id,
-						...doc.data(),
-						initial_date: doc.data().initial_date.toDate(),
-						last_reading: doc.data().last_reading.toDate()
-					})
+			const users = await UserModel.getAllUsers()
+			return res.json(users)
+		} catch (err) {
+			next(err)
+		}
+	},
+
+	createUser: async (req, res, next) => {
+		try {
+			const body = validateNewUser(req.body)
+			if (!body.success) {
+				res.status(400).json({ error: body.error })
 			}
-			return res.status(200).send(users)
-		} catch (err) {
-			console.log(err)
-			return res.status(500).send("error")
-		}
-	},
-
-	createUser: async (req, res) => {
-		try {
-			await db
-				.collection("users")
-				.doc()
-				.create({
-					name: req.body.name,
-					key: req.body.key,
-					initial_date: new Date(Date.now()),
-					is_active: false,
-					minutes: 0,
-					weekly_hours: req.body.weekly_hours,
-					last_reading: new Date(Date.now()),
-					enabled: true
-				})
-			return res.status(200).send("created")
-		} catch (err) {
-			console.log(err)
-			return res.status(500).send("error")
-		}
-	},
-
-	getUserById: async (req, res) => {
-		try {
-			const user = await db.collection("users").doc(req.params.id).get()
-			return res.status(200).send({
-				id: user.id,
-				...user.data(),
-				initial_date: user.data().initial_date.toDate(),
-				last_reading: user.data().last_reading.toDate()
+			const { name, key, daily_hours } = body.data
+			const createdOK = await UserModel.createUser({
+				name,
+				key,
+				daily_hours
 			})
+			return res.json(createdOK)
 		} catch (err) {
-			console.log(err)
-			return res.status(500).send("error")
+			next(err)
 		}
 	},
 
-	updateUserById: async (req, res) => {
+	getUserById: async (req, res, next) => {
 		try {
-			await db.collection("users").doc(req.params.id).update({
-				name: req.body.name,
-				key: req.body.key,
-				weekly_hours: req.body.weekly_hours
-			})
-			return res.status(200).send("updated")
+			const id = validateId(req.params.id)
+			if (!id.success) {
+				res.status(400).json({ error: id.error })
+			}
+			const user = await UserModel.getUserById({ id: id.data })
+			return res.json(user)
 		} catch (err) {
-			console.log(err)
-			return res.status(500).send("error")
+			next(err)
 		}
 	},
 
-	deleteUserById: async (req, res) => {
+	updateUserById: async (req, res, next) => {
 		try {
-			await db.collection("users").doc(req.params.id).update({
-				enabled: false
+			const id = validateId(req.params.id)
+			const body = validateUser(req.body)
+			if (!id.success || !body.success) {
+				res.status(400).json({ error: id.error || body.error })
+			}
+			const { name, key, daily_hours, minutes } = body.data
+			const updatedOK = await UserModel.updateUserById({
+				id: id.data,
+				name,
+				key,
+				daily_hours,
+				minutes
 			})
-			return res.status(200).send("deleted")
+			return res.json(updatedOK)
 		} catch (err) {
-			console.log(err)
-			return res.status(500).send("error")
+			next(err)
+		}
+	},
+
+	deleteUserById: async (req, res, next) => {
+		try {
+			const id = validateId(req.params.id)
+			if (!id.success) {
+				res.status(400).json({ error: id.error })
+			}
+			const deletedOK = await UserModel.deleteUserById({ id: id.data })
+			return res.json(deletedOK)
+		} catch (err) {
+			next(err)
 		}
 	}
 }

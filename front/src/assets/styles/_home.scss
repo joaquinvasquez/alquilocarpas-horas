@@ -14,6 +14,10 @@
     .hours {
       font-size: 7rem;
       margin-bottom: 32px;
+      color: $color-green;
+      &.neg{
+        color: $color-red;
+      }
     }
   }
 }

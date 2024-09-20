@@ -5,32 +5,39 @@
   flex-direction: column;
   font-variant: small-caps;
   background-color: $color-wb0;
+
   button,
-  > a {
+  >a {
     height: 50px;
     display: flex;
     align-items: center;
     border: none;
     text-decoration: none;
+
     img {
       height: 28px;
       margin-top: 2px;
     }
+
     &.users-btn {
       cursor: pointer;
+
       img {
         transform: rotate(90deg);
         transition: transform 0.2s ease-in-out;
       }
+
       &.inactive img {
         transform: rotate(0deg);
       }
     }
   }
+
   .user-list {
     display: flex;
     flex-direction: column;
     padding: 0 28px;
+
     .user-item {
       display: flex;
       justify-content: space-between;
@@ -38,9 +45,27 @@
       height: 100%;
     }
   }
+
+  .last-readed {
+    position: relative;
+    margin-top: 16px;
+
+    img {
+      height: 24px;
+      position: absolute;
+      right: 0;
+      margin-right: 28px;
+      cursor: pointer;
+    }
+
+    >div {
+      margin-top: 4px;
+      font-size: 1.2rem;
+    }
+  }
 }
 
-@media screen and (width >= 768px) {
+@media screen and (width >=768px) {
   .side-panel {
     display: flex;
   }

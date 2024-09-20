@@ -74,6 +74,23 @@ header {
           }
         }
       }
+      .last-readed {
+        position: relative;
+        margin-bottom: 16px;
+    
+        img {
+          height: 24px;
+          position: absolute;
+          right: 0;
+          margin-right: 28px;
+          cursor: pointer;
+        }
+    
+        >div {
+          margin-top: 4px;
+          font-size: 1.2rem;
+        }
+      }
     }
     &::before {
       position: absolute;

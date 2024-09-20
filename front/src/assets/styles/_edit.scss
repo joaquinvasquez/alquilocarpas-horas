@@ -1,16 +1,19 @@
 .edit {
   margin: 16px;
+
   .input-group {
     margin: 32px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
     label {
       color: $color-wb3;
       font-size: 0.8rem;
       margin-bottom: 2px;
     }
+
     input {
       width: 100%;
       font-size: 1.2rem;
@@ -18,25 +21,30 @@
       border-radius: $border-radius;
       border: 1px solid $color-wb3;
       padding: 8px;
+
       &:focus {
         outline: none;
       }
     }
+
     &.time-group {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
+
       .time {
         display: flex;
         flex-direction: column;
         align-self: flex-start;
       }
+
       .radio-btn {
         display: flex;
         justify-content: center;
         align-items: center;
         align-self: flex-end;
         margin-left: 16px;
+
         label {
           cursor: pointer;
           border-radius: 50%;
@@ -47,28 +55,34 @@
           justify-content: center;
           align-items: center;
         }
+
         input {
           display: none;
-          &:checked + label {
+
+          &:checked+label {
             background-color: $color-green;
           }
         }
+
         &:nth-child(2) {
           label {
             border: 1px solid $color-red;
           }
-          input:checked + label {
+
+          input:checked+label {
             background-color: $color-red;
           }
         }
       }
     }
   }
+
   .btn-group {
     padding-bottom: 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .delete {
       width: fit-content;
       display: flex;
@@ -77,21 +91,25 @@
       height: 36px;
       width: 36px;
       cursor: pointer;
+
       img {
         transform: scale(1.5);
       }
     }
+
     .save {
       height: 36px;
       padding: 0 16px;
       border: none;
       background-color: $color2;
+
       &:hover,
       &:focus {
         background-color: $color3;
       }
     }
   }
+
   .modal-back {
     position: absolute;
     top: 0;
@@ -103,6 +121,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     .modal {
       width: 300px;
       height: 200px;
@@ -113,24 +132,31 @@
       border-radius: $border-radius;
       display: flex;
       flex-direction: column;
+
       p {
         flex-grow: 1;
       }
+
       div {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
         button {
           padding: 4px 16px;
+
           &:nth-child(1) {
             background-color: $color-wb3;
+
             &:hover,
             &:focus {
               background-color: $color-wb2;
             }
           }
+
           &:nth-child(2) {
             background-color: $color2;
+
             &:hover,
             &:focus {
               background-color: $color3;
@@ -142,20 +168,27 @@
   }
 }
 
-@media screen and (width >= 768px) {
+@media screen and (width >=768px) {
   .edit {
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     h1 {
       grid-column: span 2;
     }
-    .input-group{
+
+    .input-group {
       input {
         width: auto;
       }
     }
+
     .btn-group .save {
       margin-right: -102px;
+
+      &.mt {
+        margin-top: 52px;
+      }
     }
   }
 }

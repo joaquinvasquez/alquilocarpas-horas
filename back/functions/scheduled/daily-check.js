@@ -1,26 +1,26 @@
-import { defineSecret } from "firebase-functions/params"
 import { onInit } from "firebase-functions/v2/core"
 import * as nodemailer from "nodemailer"
 import { db } from "../firebase/config.js"
 
-const nodeMailerUser = defineSecret("NODEMAILER_USER")
-const nodeMailerPass = defineSecret("NODEMAILER_PASS")
+const nodeMailerUser = process.env.NODEMAILER_USER
+const nodeMailerPass = process.env.NODEMAILER_PASS
 
 let transporter
+
 onInit(() => {
 	transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
-			user: nodeMailerUser.value(),
-			pass: nodeMailerPass.value()
+			user: nodeMailerUser,
+			pass: nodeMailerPass
 		}
 	})
 })
 
 const sendMailHandler = ({ s, t }) => {
 	const mailOptions = {
-		from: nodeMailerUser.value(),
-		to: nodeMailerUser.value(),
+		from: nodeMailerUser,
+		to: nodeMailerUser,
 		subject: s,
 		text: t
 	}

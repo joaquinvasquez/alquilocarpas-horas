@@ -3,7 +3,7 @@ import AppContext from "../context/AppContext"
 import { Link } from "react-router-dom"
 import Plus from "../assets/images/plus.svg"
 import Right from "../assets/images/chevron-right.svg"
-import Refresh from "../assets/images/refresh.svg"
+import Refresh from "../assets/images/Refresh"
 import Pencil from "../assets/images/Pencil"
 
 const UsersControlPanel = (): JSX.Element => {
@@ -43,9 +43,7 @@ const UsersControlPanel = (): JSX.Element => {
 				usuario
 			</Link>
 			<div className='last-readed'>
-				<img
-					src={Refresh}
-					alt='refresh button'
+				<Refresh
 					onClick={() => updateLastKeyReaded()}
 					onKeyDown={() => updateLastKeyReaded()}
 				/>

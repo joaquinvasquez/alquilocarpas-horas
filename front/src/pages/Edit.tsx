@@ -10,11 +10,17 @@ import Modal from "../components/Modal"
 import AppContext from "../context/AppContext"
 import type { UserType } from "../types"
 
+const defaultUser: Partial<UserType> = {
+	name: "",
+	key: "",
+	daily_hours: 8
+}
+
 const Edit = (): JSX.Element => {
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [timeType, setTimeType] = useState<boolean>(true)
 	const { SelectUser, user } = useContext(AppContext)
-	const [updatedUser, setUpdatedUser] = useState<Partial<UserType>>({})
+	const [updatedUser, setUpdatedUser] = useState<Partial<UserType>>(defaultUser)
 	const { userId } = useParams()
 	const [modalInfo, setModalInfo] = useState({ title: "", description: "" })
 
@@ -37,19 +43,18 @@ const Edit = (): JSX.Element => {
 	}
 
 	useEffect(() => {
-		if (userId && userId !== "new") {
+		if (userId) {
 			SelectUser(userId)
 		}
 	}, [userId])
+
 	useEffect(() => {
-		if (user) {
-			setUpdatedUser(user)
-		}
+		setUpdatedUser(user || defaultUser)
 	}, [user])
 
 	return (
 		<div className='edit'>
-			{userId !== "new" ? <h1>Editar {user?.name}</h1> : <h1>Nuevo</h1>}
+			{userId !== "new" ? <h1>Editar {user?.name}</h1> : <h1>Crear usuario</h1>}
 			<div className='input-group'>
 				<label htmlFor='name'>Nombre</label>
 				<input
@@ -137,7 +142,7 @@ const Edit = (): JSX.Element => {
 				<Modal
 					modalInfo={modalInfo}
 					close={setShowModal}
-					action={setShowModal}
+					action={setShowModal} //.IMPORTANT!!
 				/>
 			)}
 		</div>

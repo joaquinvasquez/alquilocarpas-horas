@@ -80,12 +80,20 @@
     position: relative;
     margin-top: 16px;
 
-    img {
+    svg {
+      stroke-width: 1.4;
       height: 24px;
       position: absolute;
       right: 0;
       margin-right: 28px;
       cursor: pointer;
+      transition: stroke 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+      &:hover,
+      &.active {
+        stroke: $color1;
+        transform: rotate(180deg);
+      }
     }
 
     >div {

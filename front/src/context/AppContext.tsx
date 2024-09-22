@@ -21,6 +21,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 	const SelectUser = (userId: string) => {
 		const selectedUser = users.find((user) => user.id === userId)
 		if (selectedUser) setUser(selectedUser)
+		else setUser(null)
 	}
 
 	const data = {
@@ -35,9 +36,6 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 		AppService.getAllUsers().then(setUsers)
 		updateLastKeyReaded()
 	}, [])
-	useEffect(() => {
-		setUser(users[0])
-	}, [users])
 	return <AppContext.Provider value={data}>{children}</AppContext.Provider>
 }
 

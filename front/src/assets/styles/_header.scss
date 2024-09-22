@@ -7,32 +7,38 @@ header {
   align-items: center;
   padding: 0 32px;
   color: $color-wb4;
+
   a {
     height: 100%;
+
     img {
       height: 100%;
     }
   }
+
   nav {
     position: relative;
     height: 36px;
+
     .dropdown-btn {
       padding: 6px;
       border-radius: $border-radius $border-radius 0 0;
     }
+
     .dropdown-cont {
-      width: 200px;
+      width: 220px;
       background-color: $color-wb2;
       position: absolute;
       top: 90%;
       right: 0;
       border-radius: $border-radius 0 $border-radius $border-radius;
+      box-shadow: -4px 4px 4px rgba($color-wb0, 0.1);
       padding-left: 16px;
       display: flex;
       flex-direction: column;
       font-variant: small-caps;
-      button,
-      > a {
+
+      button {
         height: 32px;
         margin: 16px 0;
         display: flex;
@@ -40,44 +46,69 @@ header {
         border: none;
         text-decoration: none;
         font-size: 1.1rem;
+
         img {
           height: 28px;
           margin-top: 2px;
         }
+
         &.users-btn {
           margin-bottom: 0;
+
           img {
             transform: rotate(90deg);
             transition: transform 0.2s ease-in-out;
           }
+
           &.inactive img {
             transform: rotate(0deg);
           }
         }
       }
+
+      >a {
+        @extend button;
+        margin-right: 16px;
+
+        &:hover {
+          background-color: $color-wb1;
+        }
+      }
+
       .user-list {
         display: flex;
         flex-direction: column;
         padding: 0 28px;
         font-size: 1.1rem;
+
         .user-item {
           display: flex;
           justify-content: space-between;
           align-items: center;
           height: 40px;
+
           a {
             display: flex;
             align-items: center;
+            color: $color-wb4;
+            text-decoration: none;
+
             img {
               height: 28px;
+            }
+
+            &:hover,
+            &.active {
+              color: $color-wb3;
             }
           }
         }
       }
+
       .last-readed {
         position: relative;
         margin-bottom: 16px;
-    
+
         img {
           height: 24px;
           position: absolute;
@@ -85,13 +116,14 @@ header {
           margin-right: 28px;
           cursor: pointer;
         }
-    
+
         >div {
           margin-top: 4px;
           font-size: 1.2rem;
         }
       }
     }
+
     &::before {
       position: absolute;
       bottom: calc(10% - 2px);
@@ -100,6 +132,7 @@ header {
       height: $border-radius * 2;
       background-color: $color-wb2;
     }
+
     &::after {
       position: absolute;
       bottom: 10%;
@@ -109,10 +142,12 @@ header {
       border-radius: 50%;
       background-color: $color-wb3;
     }
+
     &.active {
       .dropdown-btn {
         background-color: $color-wb2;
       }
+
       &::before,
       &::after {
         content: '';
@@ -121,9 +156,10 @@ header {
   }
 }
 
-@media screen and (width >= 768px) {
+@media screen and (width >=768px) {
   header {
     justify-content: center;
+
     nav {
       display: none;
     }

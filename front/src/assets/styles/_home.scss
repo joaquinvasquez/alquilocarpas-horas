@@ -4,32 +4,52 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+
   .data {
+    width: 320px;
+    padding: 16px;
+    background-color: $color-wb2;
+    border-radius: $border-radius;
     margin-bottom: 15vh;
+
     h1 {
       font-size: 2rem;
       font-weight: 700;
-      text-transform: capitalize;
+      margin-bottom: 16px;
     }
-    .hours {
-      font-size: 7rem;
-      margin-bottom: 32px;
-      color: $color-green;
-      &.neg{
-        color: $color-red;
+
+    ul {
+      width: 100%;
+      list-style: none;
+
+      li {
+        width: 100%;
+        padding: 8px 0;
+        border-radius: $border-radius;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 200ms ease-in-out;
+
+        a {
+          color: $color-wb4;
+          text-decoration: none;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: $color2;
+        }
+
       }
     }
   }
 }
 
-@media screen and (width >= 768px) {
+@media screen and (width >=768px) {
   .home {
     .data {
       h1 {
         font-size: 2.5rem;
-      }
-      .hours {
-        font-size: 10rem;
       }
     }
   }

@@ -80,13 +80,21 @@ const Edit = (): JSX.Element => {
 					</div>
 					<div className='radio-btn'>
 						<input type='radio' checked={timeType} readOnly />
-						<label htmlFor='negative' onClick={() => setTimeType(true)}>
+						<label
+							htmlFor='negative'
+							onClick={() => setTimeType(true)}
+							onKeyDown={() => setTimeType(true)}
+						>
 							<img src={MinusSelected} alt='minus' />
 						</label>
 					</div>
 					<div className='radio-btn'>
 						<input type='radio' checked={!timeType} readOnly />
-						<label htmlFor='positive' onClick={() => setTimeType(false)}>
+						<label
+							htmlFor='positive'
+							onClick={() => setTimeType(false)}
+							onKeyDown={() => setTimeType(false)}
+						>
 							<img src={PlusSelected} alt='plus' />
 						</label>
 					</div>
@@ -109,7 +117,11 @@ const Edit = (): JSX.Element => {
 			</div>
 			<div className='btn-group'>
 				{userId !== "new" && (
-					<span className='delete' onClick={() => handleShowModal("delete")}>
+					<span
+						className='delete'
+						onClick={() => handleShowModal("delete")}
+						onKeyDown={() => handleShowModal("delete")}
+					>
 						<img src={Trash} alt='trash-can' />
 					</span>
 				)}

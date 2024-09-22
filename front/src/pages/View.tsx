@@ -23,13 +23,13 @@ const formatDateTime = (userDate = ""): string => {
 
 const View = (): JSX.Element => {
 	const { userId } = useParams()
-	const { user, SelectUser } = useContext(AppContext)
+	const { users, user, selectUser } = useContext(AppContext)
 
 	useEffect(() => {
 		if (userId) {
-			SelectUser(userId)
+			selectUser(userId)
 		}
-	}, [userId])
+	}, [userId, users])
 
 	return (
 		<div className='view'>
@@ -38,6 +38,7 @@ const View = (): JSX.Element => {
 				<div className={`hours ${user?.minutes && user?.minutes < 0 && "neg"}`}>
 					{formatTime(user?.minutes)}
 				</div>
+				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
 			</div>
 		</div>

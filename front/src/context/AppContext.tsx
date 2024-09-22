@@ -18,22 +18,28 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 		setLastKeyReaded(key)
 	}
 
-	const SelectUser = (userId: string) => {
+	const selectUser = (userId: string) => {
 		const selectedUser = users.find((user) => user.id === userId)
 		if (selectedUser) setUser(selectedUser)
 		else setUser(null)
 	}
 
+	const fetchUsers = async () => {
+		const users = await AppService.getAllUsers()
+		setUsers(users)
+	}
+
 	const data = {
 		users,
+		fetchUsers,
 		user,
-		SelectUser,
+		selectUser,
 		lastKeyReaded,
 		updateLastKeyReaded
 	}
 
 	useEffect(() => {
-		AppService.getAllUsers().then(setUsers)
+		fetchUsers()
 		updateLastKeyReaded()
 	}, [])
 	return <AppContext.Provider value={data}>{children}</AppContext.Provider>

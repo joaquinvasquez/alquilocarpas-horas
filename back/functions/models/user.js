@@ -55,7 +55,6 @@ export const UserModel = {
 			error.statusCode = 404
 			throw error
 		}
-		console.log(user.data().minutes, minutes)
 		await db
 			.collection("users")
 			.doc(id)

@@ -9,6 +9,7 @@ import TimePicker from "../components/TimePicker"
 import Modal from "../components/Modal"
 import AppContext from "../context/AppContext"
 import type { UserType } from "../types"
+import { AppService } from "../services/AppServices"
 
 const defaultUser: Partial<UserType> = {
 	name: "",
@@ -19,10 +20,14 @@ const defaultUser: Partial<UserType> = {
 const Edit = (): JSX.Element => {
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [timeType, setTimeType] = useState<boolean>(true)
-	const { SelectUser, user } = useContext(AppContext)
+	const { selectUser, user } = useContext(AppContext)
 	const [updatedUser, setUpdatedUser] = useState<Partial<UserType>>(defaultUser)
 	const { userId } = useParams()
-	const [modalInfo, setModalInfo] = useState({ title: "", description: "" })
+	const [modalInfo, setModalInfo] = useState({
+		title: "",
+		description: "",
+		user: ""
+	})
 
 	const MinusSelected = timeType ? Minus : MinusRed
 	const PlusSelected = timeType ? PlusGreen : Plus
@@ -31,12 +36,14 @@ const Edit = (): JSX.Element => {
 		if (type === "delete") {
 			setModalInfo({
 				title: "Eliminar",
-				description: "¿Estás seguro de que deseas eliminar este usuario?"
+				description: "¿Estás seguro de que deseas eliminar este usuario?",
+				user: userId || ""
 			})
 		} else {
 			setModalInfo({
 				title: "Guardar",
-				description: "¿Estás seguro de que deseas guardar los cambios?"
+				description: "¿Estás seguro de que deseas guardar los cambios?",
+				user: userId || ""
 			})
 		}
 		setShowModal(true)
@@ -44,12 +51,12 @@ const Edit = (): JSX.Element => {
 
 	useEffect(() => {
 		if (userId) {
-			SelectUser(userId)
+			selectUser(userId)
 		}
 	}, [userId])
 
 	useEffect(() => {
-		setUpdatedUser(user || defaultUser)
+		setUpdatedUser({ ...(user || defaultUser), minutes: 0 })
 	}, [user])
 
 	return (
@@ -111,7 +118,7 @@ const Edit = (): JSX.Element => {
 					type='number'
 					inputMode='numeric'
 					id='hours-scheme'
-					value={updatedUser.daily_hours}
+					value={updatedUser.daily_hours || ""}
 					onChange={(e) =>
 						setUpdatedUser({
 							...updatedUser,
@@ -138,13 +145,20 @@ const Edit = (): JSX.Element => {
 					Guardar
 				</button>
 			</div>
-			{showModal && (
-				<Modal
-					modalInfo={modalInfo}
-					close={setShowModal}
-					action={setShowModal} //.IMPORTANT!!
-				/>
-			)}
+			{showModal &&
+				(user ? (
+					<Modal
+						modalInfo={modalInfo}
+						close={setShowModal}
+						action={() => AppService.updateUser(updatedUser, user.id)}
+					/>
+				) : (
+					<Modal
+						modalInfo={modalInfo}
+						close={setShowModal}
+						action={() => AppService.createUser(updatedUser)}
+					/>
+				))}
 		</div>
 	)
 }

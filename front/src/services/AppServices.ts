@@ -8,6 +8,7 @@ export const AppService: AppServiceType = {
 		return response.json()
 	},
 	getUser: async (userId: string) => {
+		// .NOTE: no se usa
 		const response = await fetch(`${baseURL}/users/${userId}`)
 		return response.json()
 	},
@@ -21,7 +22,8 @@ export const AppService: AppServiceType = {
 		})
 		return response.json()
 	},
-	updateUser: async (userId: string, userData: Partial<UserType>) => {
+	updateUser: async (userData: Partial<UserType>, userId: string) => {
+		console.log('updateUser', userData, userId)
 		const response = await fetch(`${baseURL}/users/${userId}`, {
 			method: "PUT",
 			headers: {

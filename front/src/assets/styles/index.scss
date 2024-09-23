@@ -5,8 +5,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: $color-wb4;
-  background-color: $color-wb1;
+  color: $color-bw4;
+  background-color: $color-bw1;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,7 +35,7 @@ input[type=number] {
 
 
 .btn-clear {
-  border: 1px solid $color-wb3;
+  border: 1px solid $color-bw3;
   border-radius: $border-radius;
   background-color: transparent;
   outline: none;
@@ -48,8 +48,8 @@ input[type=number] {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: $color-wb1;
-    background-color: $color-wb4;
+    color: $color-bw1;
+    background-color: $color-bw4;
   }
 }
 

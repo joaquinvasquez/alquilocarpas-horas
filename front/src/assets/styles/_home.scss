@@ -8,7 +8,7 @@
   .data {
     width: 320px;
     padding: 16px;
-    background-color: $color-wb2;
+    background-color: $color-bw2;
     border-radius: $border-radius;
     margin-bottom: 15vh;
 
@@ -30,7 +30,7 @@
         transition: background-color 0.2s ease-in-out;
 
         a {
-          color: $color-wb4;
+          color: $color-bw4;
           text-decoration: none;
           display: inline-block;
           width: 100%;

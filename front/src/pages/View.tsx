@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import AppContext from "../context/AppContext"
+import Pencil from "../assets/images/Pencil"
 
 const formatTime = (minutes = 0): string => {
 	const hours = Math.floor(minutes / 60)
@@ -34,6 +35,9 @@ const View = (): JSX.Element => {
 	return (
 		<div className='view'>
 			<div className='data'>
+				<Link className='edit-btn' to={`/edit/${user?.id}`}>
+					<Pencil />
+				</Link>
 				<h1>{user?.name}</h1>
 				<div className={`hours ${user?.minutes && user?.minutes < 0 && "neg"}`}>
 					{formatTime(user?.minutes)}

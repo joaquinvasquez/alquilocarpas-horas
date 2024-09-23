@@ -4,33 +4,64 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+
   .data {
+    position: relative;
     margin-bottom: 15vh;
+
+    .edit-btn {
+      position: absolute;
+      top: -48px;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid $color-bw4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        color: $color-bw4;
+        transform: scale(1.1);
+        margin-left: 1px;
+      }
+      &:hover, &:focus {
+        border: 1px solid $color1;
+        svg {
+          color: $color1;
+        }
+      }
+    }
+
     h1 {
       font-size: 2rem;
       font-weight: 700;
       text-transform: capitalize;
     }
+
     .hours {
       font-size: 7rem;
       margin-bottom: 32px;
       color: $color-green;
-      &.neg{
+
+      &.neg {
         color: $color-red;
       }
     }
+
     p {
       margin-bottom: 8px;
     }
   }
 }
 
-@media screen and (width >= 768px) {
+@media screen and (width >=768px) {
   .view {
     .data {
       h1 {
         font-size: 2.5rem;
       }
+
       .hours {
         font-size: 10rem;
       }

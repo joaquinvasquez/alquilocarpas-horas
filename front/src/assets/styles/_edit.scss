@@ -9,7 +9,7 @@
     align-items: flex-start;
 
     label {
-      color: $color-wb3;
+      color: $color-bw3;
       font-size: 0.8rem;
       margin-bottom: 2px;
     }
@@ -19,7 +19,7 @@
       font-size: 1.2rem;
       background-color: transparent;
       border-radius: $border-radius;
-      border: 1px solid $color-wb3;
+      border: 1px solid $color-bw3;
       padding: 8px;
 
       &:focus {
@@ -126,8 +126,8 @@
       width: 300px;
       height: 200px;
       padding: 32px;
-      background-color: $color-wb1;
-      box-shadow: 0 0 10px 0 rgba($color-wb3, 0.2);
+      background-color: $color-bw1;
+      box-shadow: 0 0 10px 0 rgba($color-bw3, 0.2);
       border-radius: $border-radius;
       display: flex;
       flex-direction: column;
@@ -146,11 +146,11 @@
           border: none;
 
           &:nth-child(1) {
-            background-color: $color-wb3;
+            background-color: $color-bw3;
 
             &:hover,
             &:focus {
-              background-color: $color-wb2;
+              background-color: $color-bw2;
             }
           }
 

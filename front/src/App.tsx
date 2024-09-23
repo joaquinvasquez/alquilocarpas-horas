@@ -23,7 +23,7 @@ function App() {
 export default App
 
 //.TODO:
-// terminar update front (timepicker)
+// terminar update front (timepicker) + validaciones del form
 // códgo ardruino del lector
 // firebase auth
 // reglas de seguridad firebase

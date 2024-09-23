@@ -1,12 +1,12 @@
 header {
   grid-area: header;
-  background-color: $color-wb3;
+  background-color: $color-bw3;
   height: $header-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 32px;
-  color: $color-wb4;
+  color: $color-bw4;
 
   a {
     height: 100%;
@@ -27,12 +27,12 @@ header {
 
     .dropdown-cont {
       width: 220px;
-      background-color: $color-wb2;
+      background-color: $color-bw2;
       position: absolute;
       top: 90%;
       right: 0;
       border-radius: $border-radius 0 $border-radius $border-radius;
-      box-shadow: -4px 4px 4px rgba($color-wb0, 0.1);
+      box-shadow: -4px 4px 4px rgba($color-bw0, 0.1);
       padding-left: 16px;
       display: flex;
       flex-direction: column;
@@ -71,7 +71,7 @@ header {
         margin-right: 16px;
 
         &:hover {
-          background-color: $color-wb1;
+          background-color: $color-bw1;
         }
       }
 
@@ -90,7 +90,7 @@ header {
           a {
             display: flex;
             align-items: center;
-            color: $color-wb4;
+            color: $color-bw4;
             text-decoration: none;
 
             img {
@@ -99,7 +99,7 @@ header {
 
             &:hover,
             &.active {
-              color: $color-wb3;
+              color: $color-bw3;
             }
           }
         }
@@ -138,7 +138,7 @@ header {
       right: calc(100% - 2px);
       width: $border-radius * 2;
       height: $border-radius * 2;
-      background-color: $color-wb2;
+      background-color: $color-bw2;
     }
 
     &::after {
@@ -148,12 +148,12 @@ header {
       width: $border-radius * 2;
       height: $border-radius * 2;
       border-radius: 50%;
-      background-color: $color-wb3;
+      background-color: $color-bw3;
     }
 
     &.active {
       .dropdown-btn {
-        background-color: $color-wb2;
+        background-color: $color-bw2;
       }
 
       &::before,

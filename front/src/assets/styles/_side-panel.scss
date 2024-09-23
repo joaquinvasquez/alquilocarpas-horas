@@ -4,7 +4,7 @@
   padding-left: 16px;
   flex-direction: column;
   font-variant: small-caps;
-  background-color: $color-wb0;
+  background-color: $color-bw0;
 
   button {
     height: 50px;
@@ -37,7 +37,7 @@
     margin-right: 16px;
 
     &:hover {
-      background-color: $color-wb2;
+      background-color: $color-bw2;
     }
   }
 
@@ -53,12 +53,12 @@
       height: 28px;
 
       a {
-        color: $color-wb4;
+        color: $color-bw4;
         text-decoration: none;
 
         &:hover,
         &.active {
-          color: $color-wb3;
+          color: $color-bw3;
         }
 
         &:nth-child(2) {

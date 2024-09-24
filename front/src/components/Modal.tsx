@@ -8,13 +8,13 @@ interface Props {
 		title: string
 		description: string
 		user: string
+		action?: () => Promise<UserType | null >
 	}
-	action?: () => Promise<UserType>
 	close: (val: boolean) => void
 }
 
-const Modal: React.FC<Props> = ({ modalInfo, action, close }) => {
-	const { title, description } = modalInfo
+const Modal: React.FC<Props> = ({ modalInfo, close }) => {
+	const { title, description, action } = modalInfo
 	const { fetchUsers } = useContext(AppContext)
 	const nav = useNavigate()
 

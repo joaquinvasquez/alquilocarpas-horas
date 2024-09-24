@@ -1,15 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import Minus from "../assets/images/minus.svg"
-import MinusRed from "../assets/images/minus-red.svg"
-import Plus from "../assets/images/plus-black.svg"
-import PlusGreen from "../assets/images/plus-green.svg"
 import Trash from "../assets/images/trash.svg"
 import TimePicker from "../components/TimePicker"
 import Modal from "../components/Modal"
 import AppContext from "../context/AppContext"
 import type { UserType } from "../types"
 import { AppService } from "../services/AppServices"
+import InputGroup from "../components/InputGroup"
+import { updatedUserSchema } from "../schemas/validation"
+import type { ValidationError } from "yup"
 
 const defaultUser: Partial<UserType> = {
 	name: "",
@@ -19,41 +18,59 @@ const defaultUser: Partial<UserType> = {
 
 const Edit = (): JSX.Element => {
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const [timeType, setTimeType] = useState<boolean>(true)
-	const { selectUser, user } = useContext(AppContext)
+	const { selectUser, user, users } = useContext(AppContext)
 	const [updatedUser, setUpdatedUser] = useState<Partial<UserType>>(defaultUser)
 	const { userId } = useParams()
 	const [modalInfo, setModalInfo] = useState({
 		title: "",
 		description: "",
-		user: ""
+		user: "",
+		action: () => Promise.resolve(user)
 	})
-
-	const MinusSelected = timeType ? Minus : MinusRed
-	const PlusSelected = timeType ? PlusGreen : Plus
+	const [errors, setErrors] = useState<ValidationError[] | null>(null)
 
 	const handleShowModal = (type: string) => {
 		if (type === "delete") {
 			setModalInfo({
 				title: "Eliminar",
-				description: "¿Estás seguro de que deseas eliminar este usuario?",
-				user: userId || ""
+				description: "¿Estás seguro de que querés eliminar este usuario?",
+				user: userId || "",
+				action: () => AppService.deleteUser(userId || "")
 			})
 		} else {
-			setModalInfo({
-				title: "Guardar",
-				description: "¿Estás seguro de que deseas guardar los cambios?",
-				user: userId || ""
-			})
+			setModalInfo(
+				user
+					? {
+							title: "Guardar",
+							description: "¿Estás seguro de que querés guardar los cambios?",
+							user: userId || "",
+							action: () => AppService.updateUser(updatedUser, user.id)
+						}
+					: {
+							title: "Crear",
+							description: "¿Estás seguro de que querés crear este usuario?",
+							user: userId || "",
+							action: () => AppService.createUser(updatedUser)
+						}
+			)
 		}
-		setShowModal(true)
+
+		updatedUserSchema
+			.validate(updatedUser, { abortEarly: false })
+			.then(() => {
+				setErrors(null)
+				setShowModal(true)
+			})
+			.catch((err) => {
+				setErrors(err.inner as ValidationError[])
+			})
 	}
 
 	useEffect(() => {
 		if (userId) {
 			selectUser(userId)
 		}
-	}, [userId])
+	}, [userId, users])
 
 	useEffect(() => {
 		setUpdatedUser({ ...(user || defaultUser), minutes: 0 })
@@ -62,71 +79,46 @@ const Edit = (): JSX.Element => {
 	return (
 		<div className='edit'>
 			{userId !== "new" ? <h1>Editar {user?.name}</h1> : <h1>Crear usuario</h1>}
-			<div className='input-group'>
-				<label htmlFor='name'>Nombre</label>
-				<input
-					type='text'
-					id='name'
-					value={updatedUser.name}
-					onChange={(e) =>
-						setUpdatedUser({ ...updatedUser, name: e.target.value })
-					}
-				/>
-			</div>
-			<div className='input-group'>
-				<label htmlFor='userKey'>Key</label>
-				<input
-					type='text'
-					id='userKey'
-					value={updatedUser.key}
-					onChange={(e) =>
-						setUpdatedUser({ ...updatedUser, key: e.target.value })
-					}
-				/>
-			</div>
+			<InputGroup
+				labelText='Nombre'
+				id='name'
+				updatedUserValue={updatedUser.name || ""}
+				setUpdatedUser={(e) =>
+					setUpdatedUser({ ...updatedUser, name: e.target.value })
+				}
+				error={errors?.find((err) => err.path === "name")}
+			/>
+			<InputGroup
+				labelText='Key'
+				id='userKey'
+				updatedUserValue={updatedUser.key?.toUpperCase() || ""}
+				setUpdatedUser={(e) =>
+					setUpdatedUser({ ...updatedUser, key: e.target.value })
+				}
+				error={errors?.find((err) => err.path === "key")}
+			/>
 			{userId !== "new" && (
-				<div className='input-group time-group'>
-					<div className='time'>
-						<label htmlFor='time'>Horas</label>
-						<TimePicker />
-					</div>
-					<div className='radio-btn'>
-						<input type='radio' checked={timeType} readOnly />
-						<label
-							htmlFor='negative'
-							onClick={() => setTimeType(true)}
-							onKeyDown={() => setTimeType(true)}
-						>
-							<img src={MinusSelected} alt='minus' />
-						</label>
-					</div>
-					<div className='radio-btn'>
-						<input type='radio' checked={!timeType} readOnly />
-						<label
-							htmlFor='positive'
-							onClick={() => setTimeType(false)}
-							onKeyDown={() => setTimeType(false)}
-						>
-							<img src={PlusSelected} alt='plus' />
-						</label>
-					</div>
-				</div>
-			)}
-			<div className='input-group'>
-				<label htmlFor='hours-scheme'>Cantidad de horas diarias</label>
-				<input
-					type='number'
-					inputMode='numeric'
-					id='hours-scheme'
-					value={updatedUser.daily_hours || ""}
-					onChange={(e) =>
-						setUpdatedUser({
-							...updatedUser,
-							daily_hours: Number.parseInt(e.target.value)
-						})
+				<TimePicker
+					updatedUserMinutesValue={updatedUser.minutes || 0}
+					setUpdatedUser={(e) =>
+						setUpdatedUser({ ...updatedUser, minutes: Number.parseInt(e.target.value) })
 					}
+					error={errors?.find((err) => err.path === "minutes")}
 				/>
-			</div>
+			)}
+			<InputGroup
+				labelText='Horas diarias'
+				id='daily-hours'
+				type='number'
+				updatedUserValue={updatedUser.daily_hours || ""}
+				setUpdatedUser={(e) =>
+					setUpdatedUser({
+						...updatedUser,
+						daily_hours: Number.parseInt(e.target.value)
+					})
+				}
+				error={errors?.find((err) => err.path === "daily_hours")}
+			/>
 			<div className='btn-group'>
 				{userId !== "new" && (
 					<span
@@ -145,20 +137,7 @@ const Edit = (): JSX.Element => {
 					Guardar
 				</button>
 			</div>
-			{showModal &&
-				(user ? (
-					<Modal
-						modalInfo={modalInfo}
-						close={setShowModal}
-						action={() => AppService.updateUser(updatedUser, user.id)}
-					/>
-				) : (
-					<Modal
-						modalInfo={modalInfo}
-						close={setShowModal}
-						action={() => AppService.createUser(updatedUser)}
-					/>
-				))}
+			{showModal && <Modal modalInfo={modalInfo} close={setShowModal} />}
 		</div>
 	)
 }

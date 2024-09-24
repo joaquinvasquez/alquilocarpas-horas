@@ -12,20 +12,21 @@
       color: $color-bw3;
       font-size: 0.8rem;
       margin-bottom: 2px;
-    }
-
-    input {
-      width: 100%;
-      font-size: 1.2rem;
-      background-color: transparent;
-      border-radius: $border-radius;
-      border: 1px solid $color-bw3;
-      padding: 8px;
-
-      &:focus {
-        outline: none;
+      display: flex;
+      flex-direction: column;
+      input {
+        font-size: 1.2rem;
+        background-color: transparent;
+        border-radius: $border-radius;
+        border: 1px solid $color-bw3;
+        padding: 8px;
+  
+        &:focus {
+          outline: none;
+        }
       }
     }
+
 
     &.time-group {
       flex-direction: row;
@@ -74,6 +75,12 @@
           }
         }
       }
+    }
+
+    .error {
+      color: $color-red;
+      font-size: 0.8rem;
+      margin-top: 2px;
     }
   }
 

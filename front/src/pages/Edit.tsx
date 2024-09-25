@@ -101,7 +101,10 @@ const Edit = (): JSX.Element => {
 				<TimePicker
 					updatedUserMinutesValue={updatedUser.minutes || 0}
 					setUpdatedUser={(e) =>
-						setUpdatedUser({ ...updatedUser, minutes: Number.parseInt(e.target.value) })
+						setUpdatedUser({
+							...updatedUser,
+							minutes: Number.parseInt(e.target.value)
+						})
 					}
 					error={errors?.find((err) => err.path === "minutes")}
 				/>
@@ -134,7 +137,7 @@ const Edit = (): JSX.Element => {
 					className={`save ${userId === "new" && "mt"} btn-clear`}
 					onClick={() => handleShowModal("save")}
 				>
-					Guardar
+					{user ? "Guardar" : "Crear"}
 				</button>
 			</div>
 			{showModal && <Modal modalInfo={modalInfo} close={setShowModal} />}

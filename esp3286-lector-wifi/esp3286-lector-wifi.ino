@@ -1,25 +1,19 @@
-#include <ESP8266WiFi.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
+#include <ArduinoJson.h>
+#include "config.h"
 
-#define WIFI_SSID1 "blanco-wifi"
-#define WIFI_PASS1 "0925071915"
-#define WIFI_SSID2 "Personal-76E"
-#define WIFI_PASS2 "93BCC8776E"
-
-#define BUZZER_PIN D1              // Pin donde está conectado el buzzer
-#define RST_PIN D0                 //Pin para el reset del RC522
-#define SS_PIN D8                  //Pin para el SS (SDA) del RC522
 MFRC522 mfrc522(SS_PIN, RST_PIN);  //Crea el objeto para el RC522
 
 // Definir arrays para las redes Wi-Fi y sus contraseñas
 const String ssid[] = { WIFI_SSID1, WIFI_SSID2 };
 const String password[] = { WIFI_PASS1, WIFI_PASS2 };
 
-// La URL a la que quieres hacer el request (sin el protocolo HTTPS)
-const String host = "api-22y3pisekq-uc.a.run.app";
-const int httpsPort = 443; // Puerto para HTTPS
+const int httpsPort = 443;  // Puerto para HTTPS
+
+WiFiClientSecure client;  // Cliente para conexiones HTTPS
 
 // Función para hacer sonar el buzzer activo
 void buzzerBeep(int duration) {
@@ -110,28 +104,64 @@ void loop() {
 
       // Realiza la petición HTTPS con el UID de la tarjeta
       if (WiFi.status() == WL_CONNECTED) {  // Verifica que esté conectado a WiFi
-        WiFiClient client;
-        HTTPClient http;
-        String url = serverUrl + uidString;  // Construye la URL con el UID
-        Serial.println("Solicitando: " + url);
+        client.setInsecure();
 
-        http.begin(client, url);  // Inicia la conexión HTTPS
-        int httpCode = http.GET();  // Realiza la petición GET
+        if (!client.connect(HOST, httpsPort)) {
+          Serial.println("Conexión fallida");
+          return;
+        }
+        // Envía la solicitud HTTP
+        client.print(String("GET ") + URL + uidString + " HTTP/1.1\r\n" + "Host: " + HOST + "\r\n" + "x-esp8266-token: " + TOKEN_ESP8266 + "\r\n" + "Origin: " + ORIGIN + "\r\n" + "Connection: close\r\n\r\n");
+
+        // Extraer el código de estado HTTP
+        int httpCode = client.readStringUntil('\n').substring(9, 12).toInt();
+        String line;
+        bool headersEnded = false;
+
+        while (client.connected() || client.available()) {
+          line = client.readStringUntil('\n');
+
+          if (line == "\r") {  // Fin de los encabezados
+            headersEnded = true;
+            break;
+          }
+        }
+        // Lee el cuerpo de la respuesta
+        String body;
+        if (headersEnded) {
+          while (client.available()) {
+            char c = client.read();
+            body += c;
+          }
+        }
 
         // Verifica el código de respuesta
         if (httpCode == 200) {
           // Respuesta OK
-          String payload = http.getString();
-          Serial.println("Respuesta del servidor:");
-          Serial.println(payload);
-
-          // Beep de éxito (pitido largo)
+          // Convierte el body a JSON
+          StaticJsonDocument<512> doc;
+          DeserializationError error = deserializeJson(doc, body);
+          if (error) {
+            Serial.print("Error al parsear JSON: ");
+            Serial.println(error.f_str());
+            return;
+          } else {
+            Serial.println("JSON parseado exitosamente!");
+          }
+          const char* action = doc["action"];
+          Serial.println(action);
+          if (String(action) == "hello") { 
+          // Beep de éxito (pitido)
           buzzerBeep(500);
-
-        } else if (httpCode == 400) {
+          } else if (String(action) == "bye") { 
+          // Beep de éxito (dos pitidos)
+          buzzerBeep(200);
+          delay(100);
+          buzzerBeep(500);
+          }
+        } else if (httpCode == 404) {
           // Error del cliente (Bad Request)
-          String payload = http.getString();
-          Serial.println("Error 400: " + payload);
+          Serial.print("Error 404\n" + body + "\n");
 
           // Beep de error (tres pitidos cortos)
           buzzerBeep(200);
@@ -143,15 +173,11 @@ void loop() {
         } else {
           // Otros códigos de error
           Serial.println("Error HTTP: " + String(httpCode));
-          
           // Beep de error grave (pitido largo)
           buzzerBeep(3000);
         }
-
-        http.end();  // Finaliza la conexión
       } else {
         Serial.println("Error: No conectado a WiFi.");
-
         // Beep de error (dos pitidos largos)
         delay(100);
         buzzerBeep(1000);

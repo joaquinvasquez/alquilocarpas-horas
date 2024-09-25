@@ -22,7 +22,7 @@ const Modal: React.FC<Props> = ({ modalInfo, close }) => {
 		if (action) await action()
 		await fetchUsers()
 		close(false)
-		if (modalInfo.user !== "new") nav(`/view/${modalInfo.user}`)
+		if (modalInfo.title === "Guardar" ) nav(`/view/${modalInfo.user}`)
 		else nav("/")
 	}
 

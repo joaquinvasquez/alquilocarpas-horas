@@ -23,6 +23,6 @@ function App() {
 export default App
 
 //.TODO:
-// códgo arduino del lector
+// restringir acceso a rutas sólo desde esp8266 y app
 // firebase auth
 // reglas de seguridad firebase

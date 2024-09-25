@@ -5,7 +5,7 @@ import Pencil from "../assets/images/Pencil"
 
 const formatTime = (minutes = 0): string => {
 	const hours = Math.floor(minutes / 60)
-	const restMinutes = minutes % 60
+	const restMinutes = Math.abs(minutes % 60)
 	return restMinutes < 10
 		? `${hours}:0${restMinutes}`
 		: `${hours}:${restMinutes}`

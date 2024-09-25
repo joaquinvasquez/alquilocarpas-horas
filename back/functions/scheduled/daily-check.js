@@ -46,6 +46,7 @@ export const dailyCheck = async () => {
 	}
 	for (const user of users) {
 		try {
+			if(user.enabled === false) continue
 			if (user.is_active) {
 				await db.collection("users").doc(user.id).update({
 					is_active: false

@@ -29,6 +29,6 @@ app.use(errorHandler)
 export const api = functions.https.onRequest(app)
 
 export const everyNight = functions.scheduler.onSchedule(
-	"59 02 * * 1-5", // at 23:59 from Monday to Friday (UTC)
+	"59 02 * * 2-6", // at 23:59 from Monday to Friday (UTC)
 	dailyCheck
 )

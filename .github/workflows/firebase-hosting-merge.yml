@@ -13,6 +13,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: install dependencies and build
         working-directory: ./front
+        env: 
+          VITE_FIREBASE_APIKEY: ${{ vars.VITE_FIREBASE_APIKEY }}
+          VITE_FIREBASE_AUTHDOMAIN: ${{ vars.VITE_FIREBASE_AUTHDOMAIN }}
+          VITE_FIREBASE_PROJECTID: ${{ vars.VITE_FIREBASE_PROJECTID }}
+          VITE_FIREBASE_STORAGEBUCKET: ${{ vars.VITE_FIREBASE_STORAGEBUCKET }}
+          VITE_FIREBASE_MESSAGINGSENDERID: ${{ vars.VITE_FIREBASE_MESSAGINGSENDERID }}
+          VITE_FIREBASE_APPID: ${{ vars.VITE_FIREBASE_APPID }}
         run: npm i && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -21,3 +28,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALQUILOCARPAS_HORAS }}'
           channelId: live
           projectId: alquilocarpas-horas
+    environment:
+      name: prd

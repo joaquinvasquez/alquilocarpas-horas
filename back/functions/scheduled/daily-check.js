@@ -46,7 +46,7 @@ export const dailyCheck = async () => {
 	}
 	for (const user of users) {
 		try {
-			if(user.enabled === false) continue
+			if (user.enabled === false) continue
 			if (user.is_active) {
 				await db.collection("users").doc(user.id).update({
 					is_active: false
@@ -59,18 +59,38 @@ export const dailyCheck = async () => {
 			} else if (
 				Math.floor((Date.now() - user.last_reading.getTime()) / 60000) > 1440
 			) {
-				await db
-					.collection("users")
-					.doc(user.id)
-					.update({
-						minutes: user.minutes - user.daily_hours * 60
-					})
 				const mail = {
 					s: `LectorID - ${user.name} hoy no trabajó`,
-					t: `El usuario [${user.name}] hoy no fichó. Ya se le descontaron las horas de hoy (${user.daily_hours}), en caso de que sea un error, hay que sumar manualmente el tiempo que trabajó hoy + lo que se descontó automáticamente (${user.daily_hours}).`
+					t: `El usuario [${user.name}] hoy no fichó. En caso de que sea un error, hay que sumarle manualmente sus ${user.daily_hours} horas o el tiempo que haya trabajado hoy.`
 				}
 				sendMailHandler(mail)
 			}
+		} catch (err) {
+			console.log(err)
+		}
+	}
+}
+
+export const dailySubstract = async () => {
+	const users = []
+	const querySnapshot = await db.collection("users").get()
+	for (const doc of querySnapshot.docs) {
+		users.push({
+			id: doc.id,
+			...doc.data(),
+			initial_date: doc.data().initial_date.toDate(),
+			last_reading: doc.data().last_reading.toDate()
+		})
+	}
+	for (const user of users) {
+		try {
+			if (user.enabled === false) continue
+			await db
+				.collection("users")
+				.doc(user.id)
+				.update({
+					minutes: user.minutes - user.daily_hours * 60
+				})
 		} catch (err) {
 			console.log(err)
 		}

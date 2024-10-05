@@ -23,6 +23,6 @@ function App() {
 export default App
 
 //.TODO:
-// restringir acceso a rutas sólo desde esp8266 y app
-// firebase auth
+// firebase auth front
+// firebase auth functions
 // reglas de seguridad firebase

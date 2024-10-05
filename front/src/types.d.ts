@@ -30,3 +30,8 @@ export interface AppServiceType {
 	deleteUser: (userId: string) => Promise<UserType>
 	getLastKeyReaded: () => Promise<KeyType>
 }
+
+export interface AuthContextType {
+	logIn: () => void
+	logOut: () => void
+}

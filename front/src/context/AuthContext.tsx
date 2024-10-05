@@ -19,32 +19,39 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 			const credential = GoogleAuthProvider.credentialFromResult(result)
 			const token = credential?.accessToken
 			// verificar si el token es valido, buscandolo en la base de datos
+			console.log("token", token?.charAt(0))
 			setIsAuthenticated(true)
 		} catch (error) {
 			console.log("error", error)
 		}
 	}
 
-  const logOut = async () => {
-    try {
-      await auth.signOut()
-      setIsAuthenticated(false)
-    } catch (error) {
-      console.log("error", error)
-    }
-  }
+	const logOut = async () => {
+		try {
+			await auth.signOut()
+			setIsAuthenticated(false)
+		} catch (error) {
+			console.log("error", error)
+		}
+	}
 
 	const data = {
 		logIn,
-    logOut
+		logOut
 	}
 
-	useEffect(() => {
-    
-  }, [])
+	useEffect(() => {}, [])
 	return (
 		<AuthContext.Provider value={data}>
-			{isAuthenticated && children}
+			{isAuthenticated ? (
+				children
+			) : (
+				<div className='login'>
+					<button onClick={logIn} type='button'>
+						Log in
+					</button>
+				</div>
+			)}
 		</AuthContext.Provider>
 	)
 }

@@ -56,7 +56,10 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 				if (isAllowed) {
 					setIsAuthenticated(true)
 					setUserToken(token)
-				} else setAuthDeclined(true)
+				} else {
+					setIsAuthenticated(false)
+					setUserToken(null)
+				}
 			}
 		})
 		setIsLoading(false)

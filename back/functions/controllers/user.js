@@ -2,6 +2,7 @@ import { UserModel } from "../models/user.js"
 import {
 	validateId,
 	validateNewUser,
+	validatePermission,
 	validateUser
 } from "../schemas/validation.js"
 
@@ -75,6 +76,17 @@ export const UserController = {
 			}
 			const deletedOK = await UserModel.deleteUserById({ id: id.data })
 			return res.json(deletedOK)
+		} catch (err) {
+			next(err)
+		}
+	},
+
+	getUserPermission: async (req, res, next) => {
+		try {
+			const body = validatePermission(req.body)
+			const { uid, email } = body.data
+			const allowed = await UserModel.getUserPermission({ uid, email })
+			return res.json(allowed)
 		} catch (err) {
 			next(err)
 		}

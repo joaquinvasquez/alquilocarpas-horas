@@ -70,5 +70,20 @@ export const UserModel = {
 	deleteUserById: async ({ id }) => {
 		await db.collection("users").doc(id).update({ enabled: false })
 		return { action: "deleted" }
+	},
+
+	getUserPermission: async ({ uid, email }) => {
+		const allowedUsers = []
+		const querySnapshot = await db.collection("authorized-users").get()
+		for (const doc of querySnapshot.docs) {
+			allowedUsers.push({
+				uid: doc.data().uid,
+				email: doc.data().email
+			})
+		}
+		const allowed = allowedUsers.find(
+			(user) => user.uid === uid && user.email === email
+		)
+		return allowed ? { allowed: true } : { allowed: false }
 	}
 }

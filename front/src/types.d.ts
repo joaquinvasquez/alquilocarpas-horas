@@ -24,14 +24,13 @@ export interface AppContextType {
 
 export interface AppServiceType {
 	getAllUsers: () => Promise<UserType[]>
-	getUser: (userId: string) => Promise<UserType>
 	createUser: (userData: Partial<UserType>) => Promise<UserType>
 	updateUser: (userData: Partial<UserType>, userId: string) => Promise<UserType>
 	deleteUser: (userId: string) => Promise<UserType>
 	getLastKeyReaded: () => Promise<KeyType>
+	getUserPermission: (user: User) => Promise<boolean>
 }
 
 export interface AuthContextType {
-	logIn: () => void
 	logOut: () => void
 }

@@ -101,6 +101,22 @@
       font-size: 1.2rem;
     }
   }
+
+  .logout {
+    margin: 32px 16px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      background-color: $color-bw2;
+    }
+  }
+
 }
 
 @media screen and (width >=768px) {

@@ -130,6 +130,22 @@ header {
           font-size: 1.2rem;
         }
       }
+
+      .logout {
+        margin: 0 16px 16px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        border-radius: $border-radius;
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          background-color: $color-bw2;
+        }
+      }
+
     }
 
     &::before {

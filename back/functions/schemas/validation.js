@@ -34,3 +34,12 @@ const updateUserSchema = z.object({
 export const validateUser = (user) => {
 	return updateUserSchema.partial().safeParse(user)
 }
+
+const permissionSchema = z.object({
+	uid: z.string().regex(/[a-zA-z0-9]{28}/),
+	email: z.string().email(),
+})
+
+export const validatePermission = (permission) => {
+	return permissionSchema.safeParse(permission)
+}

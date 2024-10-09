@@ -23,6 +23,5 @@ function App() {
 export default App
 
 //.TODO:
-// firebase auth front
 // firebase auth functions
 // reglas de seguridad firebase

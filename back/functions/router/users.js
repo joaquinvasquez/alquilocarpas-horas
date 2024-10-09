@@ -12,3 +12,5 @@ usersRouter.get("/:id", UserController.getUserById)
 usersRouter.put("/:id", UserController.updateUserById)
 
 usersRouter.delete("/:id", UserController.deleteUserById)
+
+usersRouter.post('/allowed', UserController.getUserPermission)

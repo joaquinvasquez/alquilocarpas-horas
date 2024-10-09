@@ -17,6 +17,7 @@ interface Props {
 const AuthProvider: React.FC<Props> = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [authDeclined, setAuthDeclined] = useState(false)
+	const [userToken, setUserToken] = useState<string | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 
 	const logIn = async () => {
@@ -24,9 +25,12 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 		const provider = new GoogleAuthProvider()
 		try {
 			const result = await signInWithPopup(auth, provider)
-			const isAllowed = await AppService.getUserPermission(result.user)
-			if (isAllowed) setIsAuthenticated(true)
-			else setAuthDeclined(true)
+			const token = await result.user.getIdToken()
+			const isAllowed = await AppService.getUserPermission(result.user, token)
+			if (isAllowed) {
+				setIsAuthenticated(true)
+				setUserToken(token)
+			} else setAuthDeclined(true)
 			setIsLoading(false)
 		} catch (error) {
 			console.log("error", error)
@@ -37,26 +41,31 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 		try {
 			await auth.signOut()
 			setIsAuthenticated(false)
+			setUserToken(null)
 		} catch (error) {
 			console.log("error", error)
 		}
-	}
-
-	const data = {
-		logOut
 	}
 
 	useEffect(() => {
 		setIsLoading(true)
 		onAuthStateChanged(auth, async (user) => {
 			if (user) {
-				const isAllowed = await AppService.getUserPermission(user)
-				if (isAllowed) setIsAuthenticated(true)
-				else setAuthDeclined(true)
+				const token = await user.getIdToken()
+				const isAllowed = await AppService.getUserPermission(user, token)
+				if (isAllowed) {
+					setIsAuthenticated(true)
+					setUserToken(token)
+				} else setAuthDeclined(true)
 			}
 		})
 		setIsLoading(false)
 	}, [])
+
+	const data = {
+		logOut,
+		userToken
+	}
 
 	return (
 		<AuthContext.Provider value={data}>

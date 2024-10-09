@@ -5,6 +5,7 @@ import { usersRouter } from "./router/users.js"
 import { keyRouter } from "./router/keys.js"
 import { errorHandler } from "./middlewares/errorHandler.js"
 import { dailyCheck, dailySubstract } from "./scheduled/daily-check.js"
+import { tokenValidation } from "./middlewares/tokenValidation.js"
 
 const app = express()
 
@@ -20,7 +21,7 @@ app.use(corsMiddleware)
 // PARA LOS CORS PREFLIGHT
 app.options("*", corsPreflightMiddleware)
 
-app.use("/users", usersRouter)
+app.use("/users", tokenValidation, usersRouter)
 app.use("/key", keyRouter)
 
 // PARA EL ERROR HANDLING

@@ -9,6 +9,7 @@ import { AppService } from "../services/AppServices"
 import InputGroup from "../components/InputGroup"
 import { updatedUserSchema } from "../schemas/validation"
 import type { ValidationError } from "yup"
+import AuthContext from "../context/AuthContext"
 
 const defaultUser: Partial<UserType> = {
 	name: "",
@@ -28,6 +29,7 @@ const Edit = (): JSX.Element => {
 		action: () => Promise.resolve(user)
 	})
 	const [errors, setErrors] = useState<ValidationError[] | null>(null)
+	const { userToken } = useContext(AuthContext)
 
 	const handleShowModal = (type: string) => {
 		if (type === "delete") {
@@ -35,7 +37,7 @@ const Edit = (): JSX.Element => {
 				title: "Eliminar",
 				description: "¿Estás seguro de que querés eliminar este usuario?",
 				user: userId || "",
-				action: () => AppService.deleteUser(userId || "")
+				action: () => AppService.deleteUser(userId || "", userToken)
 			})
 		} else {
 			setModalInfo(
@@ -44,13 +46,14 @@ const Edit = (): JSX.Element => {
 							title: "Guardar",
 							description: "¿Estás seguro de que querés guardar los cambios?",
 							user: userId || "",
-							action: () => AppService.updateUser(updatedUser, user.id)
+							action: () =>
+								AppService.updateUser(updatedUser, user.id, userToken)
 						}
 					: {
 							title: "Crear",
 							description: "¿Estás seguro de que querés crear este usuario?",
 							user: userId || "",
-							action: () => AppService.createUser(updatedUser)
+							action: () => AppService.createUser(updatedUser, userToken)
 						}
 			)
 		}

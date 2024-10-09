@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import type { KeyType, AppContextType, UserType } from "../types"
 import { AppService } from "../services/AppServices"
+import AuthContext from "./AuthContext"
 
 const AppContext = createContext<AppContextType>(null!)
 
@@ -12,9 +13,10 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 	const [users, setUsers] = useState<UserType[]>([])
 	const [user, setUser] = useState<UserType | null>(null)
 	const [lastKeyReaded, setLastKeyReaded] = useState<KeyType | null>(null)
+	const { userToken } = useContext(AuthContext)
 
 	const updateLastKeyReaded = async () => {
-		const key: KeyType = await AppService.getLastKeyReaded()
+		const key: KeyType = await AppService.getLastKeyReaded(userToken)
 		setLastKeyReaded(key)
 	}
 
@@ -25,7 +27,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 	}
 
 	const fetchUsers = async () => {
-		const users = await AppService.getAllUsers()
+		const users = await AppService.getAllUsers(userToken)
 		setUsers(users)
 	}
 

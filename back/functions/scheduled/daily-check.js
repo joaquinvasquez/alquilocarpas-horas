@@ -4,6 +4,7 @@ import { db } from "../firebase/config.js"
 
 const nodeMailerUser = process.env.NODEMAILER_USER
 const nodeMailerPass = process.env.NODEMAILER_PASS
+const nodeMailerTarget = process.env.NODEMAILER_TARGET
 
 let transporter
 
@@ -20,7 +21,7 @@ onInit(() => {
 const sendMailHandler = ({ s, t }) => {
 	const mailOptions = {
 		from: nodeMailerUser,
-		to: nodeMailerUser,
+		to: nodeMailerTarget,
 		subject: s,
 		text: t
 	}

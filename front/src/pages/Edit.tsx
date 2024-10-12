@@ -94,9 +94,9 @@ const Edit = (): JSX.Element => {
 			<InputGroup
 				labelText='Key'
 				id='userKey'
-				updatedUserValue={updatedUser.key?.toUpperCase() || ""}
+				updatedUserValue={updatedUser.key || ""}
 				setUpdatedUser={(e) =>
-					setUpdatedUser({ ...updatedUser, key: e.target.value })
+					setUpdatedUser({ ...updatedUser, key: e.target.value.toUpperCase() })
 				}
 				error={errors?.find((err) => err.path === "key")}
 			/>

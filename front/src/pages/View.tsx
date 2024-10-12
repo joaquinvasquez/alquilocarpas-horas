@@ -24,7 +24,7 @@ const formatDateTime = (userDate = ""): string => {
 
 const View = (): JSX.Element => {
 	const { userId } = useParams()
-	const { users, user, selectUser } = useContext(AppContext)
+	const { users, user, selectUser, readKey } = useContext(AppContext)
 
 	useEffect(() => {
 		if (userId) {
@@ -44,6 +44,16 @@ const View = (): JSX.Element => {
 				</div>
 				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
+				<div
+					className='activate-user'
+					onClick={() => readKey()}
+					onKeyDown={() => readKey()}
+				>
+					Activo
+					<span className={`btn-container ${user?.is_active && "active"}`}>
+						<span className='ball' />
+					</span>
+				</div>
 			</div>
 		</div>
 	)

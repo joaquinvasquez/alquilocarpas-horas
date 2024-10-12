@@ -1,8 +1,9 @@
 import type { AppServiceType } from "../types"
 
-const baseURL = "https://api-22y3pisekq-uc.a.run.app"
+// const baseURL = "https://api-22y3pisekq-uc.a.run.app"
+const baseURL = "http://127.0.0.1:5001/alquilocarpas-horas/us-central1/api"
 
-export const AppService: AppServiceType = {
+export const AppServices: AppServiceType = {
 	getAllUsers: async (userToken) => {
 		const response = await fetch(`${baseURL}/users`, {
 			headers: {
@@ -50,6 +51,15 @@ export const AppService: AppServiceType = {
 		})
 		const key = await response.json()
 		return key.last_read
+	},
+	readKey: async (key, userToken) => {
+		const response = await fetch(`${baseURL}/key/read/${key}`, {
+			headers: {
+				Authorization: `Bearer ${userToken}`
+			}
+		})
+		const data = await response.json()
+		return data.action
 	},
 	getUserPermission: async (user, userToken) => {
 		const res = await fetch(`${baseURL}/users/allowed`, {

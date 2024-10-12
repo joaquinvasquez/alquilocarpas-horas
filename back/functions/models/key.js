@@ -1,14 +1,6 @@
 import { db } from "../firebase/config.js"
 
 export const KeyModel = {
-	getLastReaded: async () => {
-		const lastReaded = await db
-			.collection("last-readed")
-			.doc("last-readed")
-			.get()
-
-		return lastReaded.data()
-	},
 
 	setLastReaded: async ({ key }) => {
 		await db.collection("last-readed").doc("last-readed").set({

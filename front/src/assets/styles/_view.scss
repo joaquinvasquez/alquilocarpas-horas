@@ -20,13 +20,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       svg {
         color: $color-bw4;
         transform: scale(1.1);
         margin-left: 1px;
       }
-      &:hover, &:focus {
+
+      &:hover,
+      &:focus {
         border: 1px solid $color1;
+
         svg {
           color: $color1;
         }
@@ -51,6 +55,42 @@
 
     p {
       margin-bottom: 8px;
+    }
+
+    .activate-user {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 8px;
+      border-top: 1px solid $color-bw3;
+      padding: 8px 0;
+      cursor: pointer;
+
+      .btn-container {
+        display: flex;
+        width: 40px;
+        padding: 4px;
+        background-color: $color-bw2;
+        border-radius: 20px;
+        transition: background-color 0.2s ease-in-out;
+
+        .ball {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background-color: $color-bw4;
+          border-radius: 50%;
+          transition: transform 0.2s ease-in-out;
+        }
+
+        &.active {
+          background-color: $color3;
+
+          .ball {
+            transform: translateX(20px);
+          }
+        }
+      }
     }
   }
 }

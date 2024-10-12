@@ -3,13 +3,12 @@ import AppContext from "../context/AppContext"
 import { Link } from "react-router-dom"
 import Plus from "../assets/images/plus.svg"
 import Right from "../assets/images/chevron-right.svg"
-import Refresh from "../assets/images/Refresh"
 import Pencil from "../assets/images/Pencil"
 import AuthContext from "../context/AuthContext"
 
 const UsersControlPanel = (): JSX.Element => {
 	const [usersDropdown, setUsersDropdown] = useState<boolean>(true)
-	const { users, lastKeyReaded, updateLastKeyReaded } = useContext(AppContext)
+	const { users, lastKeyReaded } = useContext(AppContext)
 	const { logOut } = useContext(AuthContext)
 	const refButtonUsers = useRef<HTMLButtonElement>(null)
 
@@ -45,10 +44,6 @@ const UsersControlPanel = (): JSX.Element => {
 				usuario
 			</Link>
 			<div className='last-readed'>
-				<Refresh
-					onClick={() => updateLastKeyReaded()}
-					onKeyDown={() => updateLastKeyReaded()}
-				/>
 				Última lectura:
 				<div>{lastKeyReaded}</div>
 			</div>

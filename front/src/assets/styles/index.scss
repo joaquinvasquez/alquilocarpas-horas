@@ -46,13 +46,6 @@ input[type=number] {
   font-variant: small-caps;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: $color-bw1;
-    background-color: $color-bw4;
-  }
-}
-
 @import 'layout';
 @import 'login';
 @import 'home';

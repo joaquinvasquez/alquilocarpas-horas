@@ -1,6 +1,4 @@
-import { useContext } from "react"
 import type { UserType } from "../types"
-import AppContext from "../context/AppContext"
 import { useNavigate } from "react-router-dom"
 
 interface Props {
@@ -15,12 +13,10 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ modalInfo, close }) => {
 	const { title, description, action } = modalInfo
-	const { fetchUsers } = useContext(AppContext)
 	const nav = useNavigate()
 
-	const saveFunction = async () => {
-		if (action) await action()
-		await fetchUsers()
+	const saveFunction = () => {
+		if (action) action()
 		close(false)
 		if (modalInfo.title === "Guardar" ) nav(`/view/${modalInfo.user}`)
 		else nav("/")

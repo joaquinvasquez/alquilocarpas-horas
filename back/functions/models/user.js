@@ -1,20 +1,6 @@
 import { db } from "../firebase/config.js"
 
 export const UserModel = {
-	getAllUsers: async () => {
-		const users = []
-		const querySnapshot = await db.collection("users").get()
-		for (const doc of querySnapshot.docs) {
-			doc.data().enabled &&
-				users.push({
-					id: doc.id,
-					...doc.data(),
-					initial_date: doc.data().initial_date.toDate(),
-					last_reading: doc.data().last_reading.toDate()
-				})
-		}
-		return users
-	},
 
 	createUser: async ({ name, key, daily_hours }) => {
 		await db
@@ -31,21 +17,6 @@ export const UserModel = {
 				enabled: true
 			})
 		return { action: "created" }
-	},
-
-	getUserById: async ({ id }) => {
-		const user = await db.collection("users").doc(id).get()
-		if (user._fieldsProto === undefined) {
-			const error = new Error("User not found")
-			error.statusCode = 404
-			throw error
-		}
-		return {
-			id: user.id,
-			...user.data(),
-			initial_date: user.data().initial_date.toDate(),
-			last_reading: user.data().last_reading.toDate()
-		}
 	},
 
 	updateUserById: async ({ id, name, key, daily_hours, minutes = 0 }) => {

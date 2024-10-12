@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -17,4 +18,6 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 auth.languageCode = "es"
 
-export { app, auth }
+const db = getFirestore(app)
+
+export { app, auth, db }

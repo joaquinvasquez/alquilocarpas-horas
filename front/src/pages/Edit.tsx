@@ -5,7 +5,7 @@ import TimePicker from "../components/TimePicker"
 import Modal from "../components/Modal"
 import AppContext from "../context/AppContext"
 import type { UserType } from "../types"
-import { AppService } from "../services/AppServices"
+import { AppServices } from "../services/AppServices"
 import InputGroup from "../components/InputGroup"
 import { updatedUserSchema } from "../schemas/validation"
 import type { ValidationError } from "yup"
@@ -37,7 +37,7 @@ const Edit = (): JSX.Element => {
 				title: "Eliminar",
 				description: "¿Estás seguro de que querés eliminar este usuario?",
 				user: userId || "",
-				action: () => AppService.deleteUser(userId || "", userToken)
+				action: () => AppServices.deleteUser(userId || "", userToken)
 			})
 		} else {
 			setModalInfo(
@@ -47,13 +47,13 @@ const Edit = (): JSX.Element => {
 							description: "¿Estás seguro de que querés guardar los cambios?",
 							user: userId || "",
 							action: () =>
-								AppService.updateUser(updatedUser, user.id, userToken)
+								AppServices.updateUser(updatedUser, user.id, userToken)
 						}
 					: {
 							title: "Crear",
 							description: "¿Estás seguro de que querés crear este usuario?",
 							user: userId || "",
-							action: () => AppService.createUser(updatedUser, userToken)
+							action: () => AppServices.createUser(updatedUser, userToken)
 						}
 			)
 		}

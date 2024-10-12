@@ -15,11 +15,10 @@ export type UserType = {
 
 export interface AppContextType {
 	users: UserType[]
-	fetchUsers: () => Promise<void>
 	user: UserType | null
 	selectUser: (userId: string) => void
 	lastKeyReaded: KeyType | null
-	updateLastKeyReaded: () => Promise<void>
+	readKey: () => Promise<void>
 }
 
 export interface AppServiceType {
@@ -35,6 +34,7 @@ export interface AppServiceType {
 	) => Promise<UserType>
 	deleteUser: (userId: string, userToken: string | null) => Promise<UserType>
 	getLastKeyReaded: (userToken: string | null) => Promise<KeyType>
+	readKey: (key: KeyType, userToken: string | null) => Promise<void>
 	getUserPermission: (user: User, userToken: string | null) => Promise<boolean>
 }
 

@@ -4,6 +4,4 @@ import { tokenValidation, tokenValidationESP8266 } from "../middlewares/tokenVal
 
 export const keyRouter = Router()
 
-keyRouter.get("/last-readed", tokenValidation, KeyController.getLastReaded)
-
 keyRouter.get("/read/:key", tokenValidationESP8266, KeyController.readKey)

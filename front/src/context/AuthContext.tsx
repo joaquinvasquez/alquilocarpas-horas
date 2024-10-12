@@ -6,7 +6,7 @@ import {
 	signInWithPopup
 } from "firebase/auth"
 import { auth } from "../firebase/config"
-import { AppService } from "../services/AppServices"
+import { AppServices } from "../services/AppServices"
 
 const AuthContext = createContext<AuthContextType>(null!)
 
@@ -26,7 +26,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 		try {
 			const result = await signInWithPopup(auth, provider)
 			const token = await result.user.getIdToken()
-			const isAllowed = await AppService.getUserPermission(result.user, token)
+			const isAllowed = await AppServices.getUserPermission(result.user, token)
 			if (isAllowed) {
 				setIsAuthenticated(true)
 				setUserToken(token)
@@ -52,7 +52,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 		onAuthStateChanged(auth, async (user) => {
 			if (user) {
 				const token = await user.getIdToken()
-				const isAllowed = await AppService.getUserPermission(user, token)
+				const isAllowed = await AppServices.getUserPermission(user, token)
 				if (isAllowed) {
 					setIsAuthenticated(true)
 					setUserToken(token)

@@ -7,10 +7,6 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);  //Crea el objeto para el RC522
 
-// Definir arrays para las redes Wi-Fi y sus contraseñas
-const String ssid[] = { WIFI_SSID1, WIFI_SSID2 };
-const String password[] = { WIFI_PASS1, WIFI_PASS2 };
-
 const int httpsPort = 443;  // Puerto para HTTPS
 
 WiFiClientSecure client;  // Cliente para conexiones HTTPS
@@ -29,54 +25,19 @@ void setup() {
   mfrc522.PCD_Init();           // Inicia el MFRC522
   pinMode(BUZZER_PIN, OUTPUT);  // Configura el pin del buzzer como salida
 
-  bool connected = false;
+  // Beep para indicar intento de conexión (pitido corto)
+  buzzerBeep(200);
 
-  for (int attempt = 0; attempt < 2; attempt++) {  // Repetir dos veces
-    for (int i = 0; i < 2; i++) {                  // Intentar con cada red
-      Serial.print("\n\nIntentando conectarse a ");
-      Serial.println(ssid[i]);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
 
-      // Beep para indicar intento de conexión (pitido corto)
-      buzzerBeep(200);
-
-      WiFi.begin(ssid[i], password[i]);
-
-      unsigned long startTime = millis();
-
-      // Intentar conectarse por 10 segundos
-      while (WiFi.status() != WL_CONNECTED && millis() - startTime < 10000) {
-        delay(500);
-        Serial.print(".");
-      }
-
-      if (WiFi.status() == WL_CONNECTED) {
-        Serial.println("");
-        Serial.println("¡Conectado exitosamente!");
-
-        // Beep de éxito (pitido largo)
-        buzzerBeep(500);
-
-        connected = true;
-        break;  // Salir del bucle si se conecta
-      } else {
-        Serial.println("");
-        Serial.println("No se pudo conectar, intentando la siguiente red...");
-      }
-    }
-
-    if (connected) {
-      break;  // Si se conectó, no necesita volver a intentar
-    }
+  while (WiFi.status() != WL_CONNECTED) {
+    buzzerBeep(100);
+    delay(1000);
+    Serial.print(".");
   }
-
-  if (!connected) {
-    Serial.println("No se pudo conectar a ninguna red después de dos intentos.");
-
-    // Beep de error (dos pitidos largos)
-    buzzerBeep(1000);
-    delay(100);
-    buzzerBeep(1000);
-  }
+  Serial.println("¡Conectado exitosamente!");
+  // Beep de éxito (pitido largo)
+  buzzerBeep(500);
 }
 
 void loop() {
@@ -150,14 +111,14 @@ void loop() {
           }
           const char* action = doc["action"];
           Serial.println(action);
-          if (String(action) == "hello") { 
-          // Beep de éxito (pitido)
-          buzzerBeep(500);
-          } else if (String(action) == "bye") { 
-          // Beep de éxito (dos pitidos)
-          buzzerBeep(200);
-          delay(100);
-          buzzerBeep(500);
+          if (String(action) == "hello") {
+            // Beep de éxito (pitido)
+            buzzerBeep(500);
+          } else if (String(action) == "bye") {
+            // Beep de éxito (dos pitidos)
+            buzzerBeep(200);
+            delay(100);
+            buzzerBeep(500);
           }
         } else if (httpCode == 404) {
           // Error del cliente (Bad Request)

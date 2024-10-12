@@ -19,17 +19,10 @@ void buzzerBeep(int duration) {
   delay(100);                      // Pequeña pausa después de apagar
 }
 
-void setup() {
-  Serial.begin(9600);           //Inicia la comunicación serial
-  SPI.begin();                  //Inicia el Bus SPI
-  mfrc522.PCD_Init();           // Inicia el MFRC522
-  pinMode(BUZZER_PIN, OUTPUT);  // Configura el pin del buzzer como salida
-
-  // Beep para indicar intento de conexión (pitido corto)
+// Función para conectar a wifi
+void connectToWiFi() {
   buzzerBeep(200);
-
   WiFi.begin(WIFI_SSID, WIFI_PASS);
-
   while (WiFi.status() != WL_CONNECTED) {
     buzzerBeep(100);
     delay(1000);
@@ -40,7 +33,19 @@ void setup() {
   buzzerBeep(500);
 }
 
+void setup() {
+  Serial.begin(9600);           //Inicia la comunicación serial
+  SPI.begin();                  //Inicia el Bus SPI
+  mfrc522.PCD_Init();           // Inicia el MFRC522
+  pinMode(BUZZER_PIN, OUTPUT);  // Configura el pin del buzzer como salida
+
+  connectToWiFi();
+}
+
 void loop() {
+  if (WiFi.status() != WL_CONNECTED) {
+    connectToWiFi();
+  }
   // Verifica si hay una nueva tarjeta presente
   if (mfrc522.PICC_IsNewCardPresent()) {
     // Selecciona una tarjeta
@@ -59,6 +64,8 @@ void loop() {
 
       // Termina la lectura de la tarjeta actual
       mfrc522.PICC_HaltA();
+      // Reinicia el RC522 (previene errores)
+      mfrc522.PCD_Init();
 
       // Beep de lectura (pitido corto)
       buzzerBeep(100);
@@ -69,7 +76,7 @@ void loop() {
 
         if (!client.connect(HOST, httpsPort)) {
           Serial.println("Conexión fallida");
-          return;
+          ESP.restart();
         }
         // Envía la solicitud HTTP
         client.print(String("GET ") + URL + uidString + " HTTP/1.1\r\n" + "Host: " + HOST + "\r\n" + "x-esp8266-token: " + TOKEN_ESP8266 + "\r\n" + "Origin: " + ORIGIN + "\r\n" + "Connection: close\r\n\r\n");
@@ -105,7 +112,7 @@ void loop() {
           if (error) {
             Serial.print("Error al parsear JSON: ");
             Serial.println(error.f_str());
-            return;
+            ESP.restart();
           } else {
             Serial.println("JSON parseado exitosamente!");
           }
@@ -137,6 +144,7 @@ void loop() {
           // Beep de error grave (pitido largo)
           buzzerBeep(3000);
         }
+        client.stop();
       } else {
         Serial.println("Error: No conectado a WiFi.");
         // Beep de error (dos pitidos largos)

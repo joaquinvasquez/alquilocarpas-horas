@@ -54,7 +54,7 @@ export const dailyCheck = async () => {
 				})
 				const mail = {
 					s: `LectorID - ${user.name} se fue sin fichar`,
-					t: `El usuario [${user.name}] quedó activado hoy, se olvidó de fichar al salir. Hay que restar manualmente el tiempo que pasó desde que se fue hasta las 00:00.`
+					t: `El usuario [${user.name}] quedó activado hoy, se olvidó de fichar al salir. Hay que restar manualmente el tiempo que pasó desde que se fue hasta las 21:00.`
 				}
 				sendMailHandler(mail)
 			} else if (

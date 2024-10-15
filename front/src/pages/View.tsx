@@ -4,7 +4,7 @@ import AppContext from "../context/AppContext"
 import Pencil from "../assets/images/Pencil"
 
 const formatTime = (minutes = 0): string => {
-	const hours = Math.floor(minutes / 60)
+	const hours = minutes / 60
 	const restMinutes = Math.abs(minutes % 60)
 	return restMinutes < 10
 		? `${hours}:0${restMinutes}`

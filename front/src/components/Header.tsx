@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import Logo from "../assets/images/logo.svg"
+import Logo from "../assets/images/arena.gif"
 import Menu from "../assets/images/menu-header.svg"
 import MenuAux from "../assets/images/menu-header-aux.svg"
 import UsersControlPanel from "./UsersControlPanel"

@@ -4,11 +4,11 @@ import AppContext from "../context/AppContext"
 import Pencil from "../assets/images/Pencil"
 
 const formatTime = (minutes = 0): string => {
-	const hours = minutes / 60
+	const hours = Math.floor(Math.abs(minutes / 60))
 	const restMinutes = Math.abs(minutes % 60)
-	return restMinutes < 10
-		? `${hours}:0${restMinutes}`
-		: `${hours}:${restMinutes}`
+	return minutes < 0
+		? `-${hours}:${restMinutes < 10 ? "0" : ""}${restMinutes}`
+		: `${hours}:${restMinutes < 10 ? "0" : ""}${restMinutes}`
 }
 
 const formatDateTime = (userDate = ""): string => {

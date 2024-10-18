@@ -3,8 +3,7 @@
 :root {
   font-family: $font1;
   font-weight: 400;
-
-  color-scheme: light dark;
+  
   color: $color-bw4;
   background-color: $color-bw1;
 
@@ -31,6 +30,9 @@ input::-webkit-search-results-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+input {
+  color: $color-bw4;
 }
 
 

@@ -2,14 +2,6 @@ import { KeyModel } from "../models/key.js"
 import { validateKey } from "../schemas/validation.js"
 
 export const KeyController = {
-	getLastReaded: async (req, res, next) => {
-		try {
-			const last = await KeyModel.getLastReaded()
-			return res.json(last)
-		} catch (err) {
-			next(err)
-		}
-	},
 
 	readKey: async (req, res, next) => {
 		try {

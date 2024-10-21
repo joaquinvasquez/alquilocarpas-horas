@@ -7,15 +7,6 @@ import {
 } from "../schemas/validation.js"
 
 export const UserController = {
-	getAllUsers: async (req, res, next) => {
-		try {
-			const users = await UserModel.getAllUsers()
-			return res.json(users)
-		} catch (err) {
-			next(err)
-		}
-	},
-
 	createUser: async (req, res, next) => {
 		try {
 			const body = validateNewUser(req.body)
@@ -29,19 +20,6 @@ export const UserController = {
 				daily_hours
 			})
 			return res.json(createdOK)
-		} catch (err) {
-			next(err)
-		}
-	},
-
-	getUserById: async (req, res, next) => {
-		try {
-			const id = validateId(req.params.id)
-			if (!id.success) {
-				res.status(400).json({ error: id.error })
-			}
-			const user = await UserModel.getUserById({ id: id.data })
-			return res.json(user)
 		} catch (err) {
 			next(err)
 		}

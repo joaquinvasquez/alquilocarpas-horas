@@ -8,11 +8,14 @@
 	},
 	"linter": {
 		"rules": {
-			"style":{
+			"style": {
 				"noNonNullAssertion": "off"
 			},
 			"correctness": {
-				"useExhaustiveDependencies": "off"
+				"useExhaustiveDependencies": "off",
+				"noUnusedImports": "warn",
+				"noUndeclaredVariables": "warn",
+				"noUnusedVariables": "warn"
 			}
 		}
 	}

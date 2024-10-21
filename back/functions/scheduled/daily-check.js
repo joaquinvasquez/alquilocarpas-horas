@@ -1,38 +1,5 @@
-import { onInit } from "firebase-functions/v2/core"
-import * as nodemailer from "nodemailer"
 import { db } from "../firebase/config.js"
-
-const nodeMailerUser = process.env.NODEMAILER_USER
-const nodeMailerPass = process.env.NODEMAILER_PASS
-const nodeMailerTarget = process.env.NODEMAILER_TARGET
-
-let transporter
-
-onInit(() => {
-	transporter = nodemailer.createTransport({
-		service: "gmail",
-		auth: {
-			user: nodeMailerUser,
-			pass: nodeMailerPass
-		}
-	})
-})
-
-const sendMailHandler = ({ s, t }) => {
-	const mailOptions = {
-		from: nodeMailerUser,
-		to: nodeMailerTarget,
-		subject: s,
-		text: t
-	}
-	transporter.sendMail(mailOptions, (error, info) => {
-		if (error) {
-			console.log(error)
-		} else {
-			console.log(`Email sent: ${info.response}`)
-		}
-	})
-}
+import { sendMailHandler } from "../utils/send-email.js"
 
 export const dailyCheck = async () => {
 	const users = []
@@ -86,12 +53,18 @@ export const dailySubstract = async () => {
 	for (const user of users) {
 		try {
 			if (user.enabled === false) continue
+			const newMinutes = user.minutes - user.daily_hours * 60
 			await db
 				.collection("users")
 				.doc(user.id)
 				.update({
-					minutes: user.minutes - user.daily_hours * 60
+					minutes: newMinutes
 				})
+			const mail = {
+				s: `LectorID - ${user.name} resta de horas diarias`,
+				t: `Al usuario [${user.name}] se le restaron ${user.daily_hours} horas. Ahora tiene ${newMinutes / 60}:${newMinutes % 60} horas.`
+			}
+			sendMailHandler(mail)
 		} catch (err) {
 			console.log(err)
 		}

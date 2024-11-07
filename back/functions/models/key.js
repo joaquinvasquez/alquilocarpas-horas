@@ -32,7 +32,7 @@ export const KeyModel = {
 				})
 			const mail = {
 				s: `LectorID - ${userData.name} fichó al salir`,
-				t: `El usuario [${userData.name}] fichó al salir. Se sumaron ${Math.floor(sessionTime / 60)}:${sessionTime % 60} horas, quedó un total de ${Math.floor(newMinutes / 60)}:${newMinutes % 60} horas trabajadas.`
+				t: `El usuario [${userData.name}] fichó al salir. Se sumaron ${Math.floor(sessionTime / 60)}:${sessionTime % 60} horas, quedó un total de ${Math.floor(newMinutes / 60)}:${Math.abs(newMinutes % 60)} horas trabajadas.`
 			}
 			sendMailHandler(mail)
 			return { action: "bye" }

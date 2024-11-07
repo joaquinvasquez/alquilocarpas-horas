@@ -26,6 +26,7 @@ export const tokenValidation = async (req, res, next) => {
 		req.user = decodedToken
 		next()
 	} catch (error) {
+		console.log("Invalid token", error)
 		return res.status(401).json({ code: 401, message: "Invalid token" })
 	}
 }

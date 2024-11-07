@@ -45,8 +45,8 @@ export const KeyModel = {
 				last_reading: new Date(Date.now())
 			})
 		const mail = {
-			s: `LectorID - ${user.name} fichó al entrar`,
-			t: `El usuario [${user.name}] fichó al entrar.`
+			s: `LectorID - ${userData.name} fichó al entrar`,
+			t: `El usuario [${userData.name}] fichó al entrar.`
 		}
 		sendMailHandler(mail)
 		return { action: "hello" }

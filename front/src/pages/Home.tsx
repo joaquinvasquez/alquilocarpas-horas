@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, type JSX } from "react"
 import AppContext from "../context/AppContext"
 import { Link } from "react-router-dom"
 

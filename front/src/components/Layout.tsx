@@ -1,18 +1,19 @@
-import Header from './Header'
-import SidePanel from './SidePanel'
+import type { FC, ReactNode } from "react"
+import Header from "./Header"
+import SidePanel from "./SidePanel"
 
 interface Props {
-  children: React.ReactNode
+	children: ReactNode
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
-  return (
-    <>
-      <Header />
-      <SidePanel />
-      <main>{children}</main>
-    </>
-  )
+const Layout: FC<Props> = ({ children }) => {
+	return (
+		<>
+			<Header />
+			<SidePanel />
+			<main>{children}</main>
+		</>
+	)
 }
 
 export default Layout

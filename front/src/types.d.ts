@@ -21,6 +21,16 @@ export interface AppContextType {
 	readKey: () => Promise<void>
 }
 
+export type User = {
+	uid: string
+	email: string
+}
+
+export type LoginInfo = {
+	allowed: boolean
+	admin: boolean
+}
+
 export interface AppServiceType {
 	getAllUsers: (userToken: string | null) => Promise<UserType[]>
 	createUser: (
@@ -35,7 +45,10 @@ export interface AppServiceType {
 	deleteUser: (userId: string, userToken: string | null) => Promise<UserType>
 	getLastKeyReaded: (userToken: string | null) => Promise<KeyType>
 	readKey: (key: KeyType, userToken: string | null) => Promise<void>
-	getUserPermission: (user: User, userToken: string | null) => Promise<boolean>
+	getUserPermission: (
+		user: User,
+		userToken: string | null
+	) => Promise<LoginInfo>
 }
 
 export interface AuthContextType {

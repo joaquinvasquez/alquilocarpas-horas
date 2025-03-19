@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import {
+	type ReactNode,
+	type FC,
+	createContext,
+	useContext,
+	useEffect,
+	useState
+} from "react"
 import type { KeyType, AppContextType, UserType } from "../types"
 import { AppServices } from "../services/AppServices"
 import AuthContext from "./AuthContext"
@@ -8,10 +15,10 @@ import { db } from "../firebase/config"
 const AppContext = createContext<AppContextType>(null!)
 
 interface Props {
-	children: React.ReactNode
+	children: ReactNode
 }
 
-const AppProvider: React.FC<Props> = ({ children }) => {
+const AppProvider: FC<Props> = ({ children }) => {
 	const [users, setUsers] = useState<UserType[]>([])
 	const [user, setUser] = useState<UserType | null>(null)
 	const [lastKeyReaded, setLastKeyReaded] = useState<KeyType | null>(null)

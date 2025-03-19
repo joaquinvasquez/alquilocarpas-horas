@@ -1,3 +1,4 @@
+import type { FC } from "react"
 import type { UserType } from "../types"
 import { useNavigate } from "react-router-dom"
 
@@ -11,7 +12,7 @@ interface Props {
 	close: (val: boolean) => void
 }
 
-const Modal: React.FC<Props> = ({ modalInfo, close }) => {
+const Modal: FC<Props> = ({ modalInfo, close }) => {
 	const { title, description, action } = modalInfo
 	const nav = useNavigate()
 

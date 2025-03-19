@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { type JSX, useContext, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import AppContext from "../context/AppContext"
 import Pencil from "../assets/images/Pencil"

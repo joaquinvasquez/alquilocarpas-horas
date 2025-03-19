@@ -1,6 +1,6 @@
-import type { AppServiceType } from "../types"
+import type { AppServiceType, LoginInfo } from "../types"
 
-const baseURL = "https://api-22y3pisekq-uc.a.run.app"
+const baseURL = import.meta.env.VITE_API_BASE_URL
 
 export const AppServices: AppServiceType = {
 	getAllUsers: async (userToken) => {
@@ -69,7 +69,7 @@ export const AppServices: AppServiceType = {
 			},
 			body: JSON.stringify({ uid: user.uid, email: user.email })
 		})
-		const data = await res.json()
-		return data.allowed
+		const data: LoginInfo = await res.json()
+		return data
 	}
 }

@@ -9,13 +9,45 @@
 	"linter": {
 		"rules": {
 			"style": {
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"noCommaOperator": "off",
+				"noUselessElse": "off",
+				"noUnusedTemplateLiteral": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useTemplate": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useSelfClosingElements": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useConst": "off"
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "off",
 				"noUnusedImports": "warn",
 				"noUndeclaredVariables": "warn",
-				"noUnusedVariables": "warn"
+				"noUnusedVariables": "warn",
+				"noEmptyPattern": "warn"
+			},
+			"a11y": {
+				"useKeyWithClickEvents": "off",
+				"useButtonType": "off",
+				"useAltText": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "off",
+				"noAssignInExpressions": "warn"
+			},
+			"performance": {
+				"noDelete": "warn"
+			},
+			"complexity": {
+				"useOptionalChain": "warn",
+				"noUselessTernary": "warn"
 			}
 		}
 	}

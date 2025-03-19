@@ -22,7 +22,7 @@ app.use(corsMiddleware)
 app.options("*", corsPreflightMiddleware)
 
 app.use("/users", tokenValidation, usersRouter)
-app.use("/key", keyRouter)
+app.use("/key", tokenValidation, keyRouter)
 
 // PARA EL ERROR HANDLING
 app.use(errorHandler)

@@ -57,11 +57,6 @@ export const dailySubstract = async () => {
 			await db.collection("users").doc(user.id).update({
 				minutes: newMinutes
 			})
-			const mail = {
-				s: `LectorID - ${user.name} resta de horas diarias`,
-				t: `Al usuario [${user.name}] se le restaron ${user.daily_hours} horas. Ahora tiene ${Math.floor(newMinutes / 60)}:${Math.abs(newMinutes % 60)} horas.`
-			}
-			sendMailHandler(mail)
 		} catch (err) {
 			console.log(err)
 		}

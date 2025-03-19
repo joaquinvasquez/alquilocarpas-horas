@@ -1,7 +1,6 @@
 import { db } from "../firebase/config.js"
 
 export const UserModel = {
-
 	createUser: async ({ name, key, daily_hours }) => {
 		await db
 			.collection("users")
@@ -44,17 +43,36 @@ export const UserModel = {
 	},
 
 	getUserPermission: async ({ uid, email }) => {
+		const adminUsers = []
 		const allowedUsers = []
 		const querySnapshot = await db.collection("authorized-users").get()
 		for (const doc of querySnapshot.docs) {
-			allowedUsers.push({
+			adminUsers.push({
 				uid: doc.data().uid,
 				email: doc.data().email
 			})
 		}
-		const allowed = allowedUsers.find(
+		const admin = adminUsers.find(
 			(user) => user.uid === uid && user.email === email
-		)
-		return allowed ? { allowed: true } : { allowed: false }
+		) !== undefined
+		const querySnapshot2 = await db.collection("users").get()
+		for (const doc of querySnapshot2.docs) {
+			allowedUsers.push({
+				name: doc.data().name,
+				email: doc.data().email
+			})
+		}
+		const allowed = allowedUsers.find(
+			(user) => user.email === email
+		) !== undefined
+		console.log("adminUsers", adminUsers)
+		console.log("allowedUsers", allowedUsers)
+		console.log("admin", admin)
+		console.log("allowed", allowed)
+		return admin
+			? { admin: true, allowed: true }
+			: allowed
+				? { admin: false, allowed: true }
+				: { admin: false, allowed: false }
 	}
 }

@@ -53,19 +53,19 @@ export const UserModel = {
 				email: doc.data().email
 			})
 		}
-		const admin = adminUsers.find(
-			(user) => user.uid === uid && user.email === email
-		) !== undefined
+		const admin =
+			adminUsers.find((user) => user.uid === uid && user.email === email) !==
+			undefined
 		const querySnapshot2 = await db.collection("users").get()
 		for (const doc of querySnapshot2.docs) {
-			allowedUsers.push({
-				name: doc.data().name,
-				email: doc.data().email
-			})
+			if (doc.data().enabled)
+				allowedUsers.push({
+					name: doc.data().name,
+					email: doc.data().email
+				})
 		}
-		const allowed = allowedUsers.find(
-			(user) => user.email === email
-		) !== undefined
+		const allowed =
+			allowedUsers.find((user) => user.email === email) !== undefined
 		return admin
 			? { admin: true, allowed: true }
 			: allowed

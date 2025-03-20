@@ -11,6 +11,7 @@ import { AppServices } from "../services/AppServices"
 import AuthContext from "./AuthContext"
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore"
 import { db } from "../firebase/config"
+import EnrollUser from "../pages/EnrollUser"
 
 const AppContext = createContext<AppContextType>(null!)
 
@@ -22,7 +23,7 @@ const AppProvider: FC<Props> = ({ children }) => {
 	const [users, setUsers] = useState<UserType[]>([])
 	const [user, setUser] = useState<UserType | null>(null)
 	const [lastKeyReaded, setLastKeyReaded] = useState<KeyType | null>(null)
-	const { userToken } = useContext(AuthContext)
+	const { isAdmin, userEmail, userToken } = useContext(AuthContext)
 
 	const selectUser = (userId: string) => {
 		const selectedUser = users.find((user) => user.id === userId)
@@ -59,11 +60,23 @@ const AppProvider: FC<Props> = ({ children }) => {
 			setUsers(users)
 		})
 
-		onSnapshot(doc(db, "last-readed", "last-readed"), (doc) => {
-			setLastKeyReaded(doc.data()?.last_read as KeyType)
-		})
+		isAdmin &&
+			onSnapshot(doc(db, "last-readed", "last-readed"), (doc) => {
+				setLastKeyReaded(doc.data()?.last_read as KeyType)
+			})
 	}, [])
-	return <AppContext.Provider value={data}>{children}</AppContext.Provider>
+
+	useEffect(() => {
+		if (!isAdmin && userEmail) {
+			setUser(users.find((user) => user.email === userEmail) || null)
+		}
+	}, [users, userEmail])
+
+	return (
+		<AppContext.Provider value={data}>
+			{isAdmin ? children : <EnrollUser />}
+		</AppContext.Provider>
+	)
 }
 
 export { AppProvider }

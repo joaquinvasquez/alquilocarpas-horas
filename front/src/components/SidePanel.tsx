@@ -1,3 +1,4 @@
+import type { JSX } from "react"
 import UsersControlPanel from "./UsersControlPanel"
 
 const SidePanel = (): JSX.Element => {

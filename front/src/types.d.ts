@@ -11,6 +11,7 @@ export type UserType = {
 	minutes: number
 	enabled: boolean
 	initial_date: string
+	email: string
 }
 
 export interface AppContextType {
@@ -53,5 +54,7 @@ export interface AppServiceType {
 
 export interface AuthContextType {
 	logOut: () => void
+	isAdmin: boolean,
+	userEmail: string | null,
 	userToken: string | null | null
 }

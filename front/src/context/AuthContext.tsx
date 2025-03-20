@@ -13,7 +13,6 @@ import {
 } from "firebase/auth"
 import { auth } from "../firebase/config"
 import { AppServices } from "../services/AppServices"
-import EnrollUser from "../pages/EnrollUser"
 
 const AuthContext = createContext<AuthContextType>(null!)
 
@@ -22,7 +21,7 @@ interface Props {
 }
 
 const AuthProvider: FC<Props> = ({ children }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [userEmail, setUserEmail] = useState<string | null>(null)
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [authDeclined, setAuthDeclined] = useState(false)
 	const [userToken, setUserToken] = useState<string | null>(null)
@@ -34,16 +33,17 @@ const AuthProvider: FC<Props> = ({ children }) => {
 		try {
 			const result = await signInWithPopup(auth, provider)
 			const token = await result.user.getIdToken()
+			const email = result.user.email
 			const loginInfo = await AppServices.getUserPermission(
 				result.user as User,
 				token
 			)
 			if (loginInfo.admin) {
 				setIsAdmin(true)
-				setIsAuthenticated(true)
+				setUserEmail(email)
 				setUserToken(token)
 			} else if (loginInfo.allowed) {
-				setIsAuthenticated(true)
+				setUserEmail(email)
 				setUserToken(token)
 			} else setAuthDeclined(true)
 			setIsLoading(false)
@@ -54,10 +54,10 @@ const AuthProvider: FC<Props> = ({ children }) => {
 
 	const logOut = async () => {
 		try {
-			await auth.signOut()
-			setIsAuthenticated(false)
+			setUserEmail(null)
 			setIsAdmin(false)
 			setUserToken(null)
+			await auth.signOut()
 		} catch (error) {
 			console.log("error", error)
 		}
@@ -68,46 +68,46 @@ const AuthProvider: FC<Props> = ({ children }) => {
 		onAuthStateChanged(auth, async (user) => {
 			if (user) {
 				const token = await user.getIdToken()
+				const email = user.email
 				const loginInfo = await AppServices.getUserPermission(
 					user as User,
 					token
 				)
 				if (loginInfo.admin) {
 					setIsAdmin(true)
-					setIsAuthenticated(true)
+					setUserEmail(email)
 					setUserToken(token)
 				} else if (loginInfo.allowed) {
-					setIsAuthenticated(true)
+					setUserEmail(email)
 					setUserToken(token)
 				} else {
-					setIsAuthenticated(false)
+					setUserEmail(null)
 					setUserToken(null)
 				}
 			}
 		})
 		setIsLoading(false)
+
 	}, [])
 
 	const data = {
 		logOut,
+		isAdmin,
+		userEmail,
 		userToken
 	}
 
 	return (
 		<AuthContext.Provider value={data}>
-			{isAuthenticated ? (
-				isAdmin ? (
-					children
-				) : (
-					<EnrollUser />
-				)
+			{userEmail !== null ? (
+				children
 			) : (
 				<div className='login'>
 					{isLoading ? (
 						<div className='loading' />
 					) : (
 						<>
-							<button onClick={logIn} type='button'>
+							<button onClick={logIn}>
 								Iniciar sesión
 							</button>
 							{authDeclined && <p>Acceso denegado</p>}

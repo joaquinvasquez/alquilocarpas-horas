@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react"
+import { useContext, useRef, useState, type JSX } from "react"
 import AppContext from "../context/AppContext"
 import { Link } from "react-router-dom"
 import Plus from "../assets/images/plus.svg"
@@ -19,7 +19,6 @@ const UsersControlPanel = (): JSX.Element => {
 	return (
 		<>
 			<button
-				type='button'
 				className='users-btn  btn-clear'
 				onClick={handleUsersDropdown}
 				ref={refButtonUsers}
@@ -47,7 +46,7 @@ const UsersControlPanel = (): JSX.Element => {
 				Última lectura:
 				<div>{lastKeyReaded}</div>
 			</div>
-			<button className='logout' type='button' onClick={logOut}>
+			<button className='logout' onClick={logOut}>
 				Cerrar Sesión
 			</button>
 		</>

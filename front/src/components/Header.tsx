@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type JSX } from "react"
 import { Link, useLocation } from "react-router-dom"
 import Logo from "../assets/images/arena.gif"
 import Menu from "../assets/images/menu-header.svg"
@@ -37,7 +37,6 @@ const Header = (): JSX.Element => {
 				<img
 					className='dropdown-btn'
 					onClick={handleDrowdown}
-					onKeyDown={handleDrowdown}
 					src={MenuSelected}
 					alt='menu button'
 				/>

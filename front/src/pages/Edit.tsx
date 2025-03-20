@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, type JSX } from "react"
 import { useParams } from "react-router-dom"
 import Trash from "../assets/images/trash.svg"
 import TimePicker from "../components/TimePicker"
@@ -14,7 +14,8 @@ import AuthContext from "../context/AuthContext"
 const defaultUser: Partial<UserType> = {
 	name: "",
 	key: "",
-	daily_hours: 8
+	daily_hours: 8,
+	email: ""
 }
 
 const Edit = (): JSX.Element => {
@@ -92,6 +93,15 @@ const Edit = (): JSX.Element => {
 				error={errors?.find((err) => err.path === "name")}
 			/>
 			<InputGroup
+				labelText='Email'
+				id='email'
+				updatedUserValue={updatedUser.email || ""}
+				setUpdatedUser={(e) =>
+					setUpdatedUser({ ...updatedUser, email: e.target.value })
+				}
+				error={errors?.find((err) => err.path === "email")}
+			/>
+			<InputGroup
 				labelText='Key'
 				id='userKey'
 				updatedUserValue={updatedUser.key || ""}
@@ -127,16 +137,11 @@ const Edit = (): JSX.Element => {
 			/>
 			<div className='btn-group'>
 				{userId !== "new" && (
-					<span
-						className='delete'
-						onClick={() => handleShowModal("delete")}
-						onKeyDown={() => handleShowModal("delete")}
-					>
+					<span className='delete' onClick={() => handleShowModal("delete")}>
 						<img src={Trash} alt='trash-can' />
 					</span>
 				)}
 				<button
-					type='button'
 					className={`save ${userId === "new" && "mt"} btn-clear`}
 					onClick={() => handleShowModal("save")}
 				>

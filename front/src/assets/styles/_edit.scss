@@ -85,10 +85,9 @@
   }
 
   .btn-group {
-    padding-bottom: 32px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    padding-top: 15px;
 
     .delete {
       width: fit-content;
@@ -109,6 +108,7 @@
       padding: 0 16px;
       border: none;
       background-color: $color2;
+      margin-left: 32px;
 
       &:hover,
       &:focus {
@@ -190,12 +190,5 @@
       }
     }
 
-    .btn-group .save {
-      margin-right: -102px;
-
-      &.mt {
-        margin-top: 52px;
-      }
-    }
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type FC, type ChangeEvent } from "react"
 import Clock from "../assets/images/clock.svg"
 import Minus from "../assets/images/minus.svg"
 import MinusRed from "../assets/images/minus-red.svg"
@@ -8,11 +8,11 @@ import type { ValidationError } from "yup"
 
 interface Props {
 	updatedUserMinutesValue: number
-	setUpdatedUser: (e: React.ChangeEvent<HTMLInputElement>) => void
+	setUpdatedUser: (e: ChangeEvent<HTMLInputElement>) => void
 	error?: ValidationError
 }
 
-const TimePicker: React.FC<Props> = ({
+const TimePicker: FC<Props> = ({
 	updatedUserMinutesValue,
 	setUpdatedUser,
 	error
@@ -45,7 +45,7 @@ const TimePicker: React.FC<Props> = ({
 			: Number(hours) * 60 + Number(mins)
 		setUpdatedUser({
 			target: { value: time.toString() }
-		} as React.ChangeEvent<HTMLInputElement>)
+		} as ChangeEvent<HTMLInputElement>)
 	}, [hours, mins, timeType])
 
 	return (
@@ -77,21 +77,13 @@ const TimePicker: React.FC<Props> = ({
 			</div>
 			<div className='radio-btn'>
 				<input type='radio' checked={timeType} readOnly />
-				<label
-					htmlFor='negative'
-					onClick={() => setTimeType(true)}
-					onKeyDown={() => setTimeType(true)}
-				>
+				<label htmlFor='negative' onClick={() => setTimeType(true)}>
 					<img src={MinusSelected} alt='minus' />
 				</label>
 			</div>
 			<div className='radio-btn'>
 				<input type='radio' checked={!timeType} readOnly />
-				<label
-					htmlFor='positive'
-					onClick={() => setTimeType(false)}
-					onKeyDown={() => setTimeType(false)}
-				>
+				<label htmlFor='positive' onClick={() => setTimeType(false)}>
 					<img src={PlusSelected} alt='plus' />
 				</label>
 			</div>

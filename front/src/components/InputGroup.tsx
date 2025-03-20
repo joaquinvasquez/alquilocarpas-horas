@@ -1,3 +1,4 @@
+import type { FC, ChangeEvent } from "react"
 import type { ValidationError } from "yup"
 
 interface Props {
@@ -5,11 +6,11 @@ interface Props {
 	type?: string
 	id: string
 	updatedUserValue: string | number
-	setUpdatedUser: (e: React.ChangeEvent<HTMLInputElement>) => void
+	setUpdatedUser: (e: ChangeEvent<HTMLInputElement>) => void
 	error?: ValidationError
 }
 
-const InputGroup: React.FC<Props> = ({
+const InputGroup: FC<Props> = ({
 	labelText,
 	type,
 	id,
@@ -26,6 +27,7 @@ const InputGroup: React.FC<Props> = ({
 					id={id}
 					value={updatedUserValue}
 					onChange={setUpdatedUser}
+					autoComplete='off'
 				/>
 			</label>
 			{error && <span className='error'>{error.message}</span>}

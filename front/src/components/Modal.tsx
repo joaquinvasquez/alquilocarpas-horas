@@ -31,13 +31,12 @@ const Modal: FC<Props> = ({ modalInfo, close }) => {
 					<p>{description}</p>
 					<div>
 						<button
-							type='button'
 							className='btn-clear'
 							onClick={() => close(false)}
 						>
 							Cancelar
 						</button>
-						<button type='button' className='btn-clear' onClick={saveFunction}>
+						<button className='btn-clear' onClick={saveFunction}>
 							Aceptar
 						</button>
 					</div>

@@ -13,11 +13,12 @@ export const UserController = {
 			if (!body.success) {
 				res.status(400).json({ error: body.error })
 			}
-			const { name, key, daily_hours } = body.data
+			const { name, key, daily_hours, email } = body.data
 			const createdOK = await UserModel.createUser({
 				name,
 				key,
-				daily_hours
+				daily_hours,
+				email
 			})
 			return res.json(createdOK)
 		} catch (err) {

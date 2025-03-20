@@ -1,7 +1,6 @@
 import admin from "firebase-admin"
 
 export const tokenValidationESP8266 = (req, res, next) => {
-	console.log("tokenValidationESP8266")
 	const token = req.header("x-esp8266-token")
 	if (!token && !req.header("Authorization")) {
 		return res.status(401).json({ code: 401, message: "Access Denied" })

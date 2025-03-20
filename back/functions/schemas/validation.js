@@ -17,7 +17,8 @@ export const validateId = (id) => {
 const newUserSchema = z.object({
 	name: z.string().min(1).max(20),
 	key: z.string().regex(/[A-F0-9]{8}/),
-	daily_hours: z.number().min(0).max(12)
+	daily_hours: z.number().min(0).max(12),
+	email: z.string().email()
 })
 
 export const validateNewUser = (user) => {

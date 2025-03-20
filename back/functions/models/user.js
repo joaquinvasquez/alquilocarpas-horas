@@ -1,7 +1,7 @@
 import { db } from "../firebase/config.js"
 
 export const UserModel = {
-	createUser: async ({ name, key, daily_hours }) => {
+	createUser: async ({ name, key, daily_hours, email }) => {
 		await db
 			.collection("users")
 			.doc()
@@ -13,7 +13,8 @@ export const UserModel = {
 				minutes: 0,
 				daily_hours: daily_hours,
 				last_reading: new Date(Date.now()),
-				enabled: true
+				enabled: true,
+				email: email
 			})
 		return { action: "created" }
 	},
@@ -65,10 +66,6 @@ export const UserModel = {
 		const allowed = allowedUsers.find(
 			(user) => user.email === email
 		) !== undefined
-		console.log("adminUsers", adminUsers)
-		console.log("allowedUsers", allowedUsers)
-		console.log("admin", admin)
-		console.log("allowed", allowed)
 		return admin
 			? { admin: true, allowed: true }
 			: allowed

@@ -32,6 +32,11 @@ export type LoginInfo = {
 	admin: boolean
 }
 
+export type AuthStatus = {
+	declined: boolean
+	message: string
+}
+
 export interface AppServiceType {
 	getAllUsers: (userToken: string | null) => Promise<UserType[]>
 	createUser: (

@@ -44,12 +44,22 @@ const View = (): JSX.Element => {
 				</div>
 				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
-				<div className='activate-user' onClick={() => readKey()}>
-					Activo
-					<span className={`btn-container ${user?.is_active && "active"}`}>
-						<span className='ball' />
-					</span>
-				</div>
+				<div className='activate-user'>
+				<button
+					className='btn-clear hello'
+					onClick={() => readKey()}
+					disabled={user?.is_active}
+				>
+					Fichar entrada
+				</button>
+				<button
+					className='btn-clear bye'
+					onClick={() => readKey()}
+					disabled={!user?.is_active}
+				>
+					Fichar salida
+				</button>
+			</div>
 			</div>
 		</div>
 	)

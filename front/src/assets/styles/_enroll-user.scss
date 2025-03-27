@@ -1,67 +1,22 @@
 .enroll-user {
+  @extend .view;
+  height: auto;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 
-  .data {
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      text-transform: capitalize;
-    }
-
-    p {
-      margin-bottom: 8px;
-    }
-
-    .activate-user {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      border-top: 1px solid $color-bw3;
-      padding: 32px 0 0 0;
-      cursor: pointer;
-
-      .btn-container {
-        display: flex;
-        width: 40px;
-        padding: 4px;
-        background-color: $color-bw2;
-        border-radius: 20px;
-        transition: background-color 0.2s ease-in-out;
-
-        .ball {
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          background-color: $color-bw4;
-          border-radius: 50%;
-          transition: transform 0.2s ease-in-out;
-        }
-
-        &.active {
-          background-color: $color3;
-
-          .ball {
-            transform: translateX(20px);
-          }
-        }
-      }
-    }
-
-    .logout {
+  .logout {
+    margin-top: 16px;
+    border-top: 1px solid $color-bw3;
+    button {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 16px;
-      margin: 32px auto;
+      padding: 8px 16px;
+      margin: 16px auto;
       font-size: 1rem;
       border-radius: $border-radius;
       cursor: pointer;

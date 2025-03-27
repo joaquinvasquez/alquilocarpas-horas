@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext"
 
 const EnrollUser = (): JSX.Element => {
 	const { user, readKey } = useContext(AppContext)
-  const { logOut } = useContext(AuthContext)
+	const { logOut } = useContext(AuthContext)
 
 	return (
 		<div className='enroll-user'>
@@ -16,18 +16,27 @@ const EnrollUser = (): JSX.Element => {
 				</div> */}
 				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
-				<div
-					className='activate-user'
-					onClick={() => readKey()}
-				>
-					Activo
-					<span className={`btn-container ${user?.is_active && "active"}`}>
-						<span className='ball' />
-					</span>
+				<div className='activate-user'>
+					<button
+						className='btn-clear hello'
+						onClick={() => readKey()}
+						disabled={user?.is_active}
+					>
+						Fichar entrada
+					</button>
+					<button
+						className='btn-clear bye'
+						onClick={() => readKey()}
+						disabled={!user?.is_active}
+					>
+						Fichar salida
+					</button>
 				</div>
-			<button className='btn-clear logout' onClick={logOut}>
-				Cerrar Sesión
-			</button>
+				<div className='logout'>
+					<button className='btn-clear' onClick={logOut}>
+						Cerrar Sesión
+					</button>
+				</div>
 			</div>
 		</div>
 	)

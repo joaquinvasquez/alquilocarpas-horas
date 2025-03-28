@@ -33,10 +33,11 @@ export const UserController = {
 			if (!id.success || !body.success) {
 				res.status(400).json({ error: id.error || body.error })
 			}
-			const { name, key, daily_hours, minutes } = body.data
+			const { name, email, key, daily_hours, minutes } = body.data
 			const updatedOK = await UserModel.updateUserById({
 				id: id.data,
 				name,
+				email,
 				key,
 				daily_hours,
 				minutes

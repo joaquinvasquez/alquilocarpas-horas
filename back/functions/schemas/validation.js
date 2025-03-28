@@ -16,9 +16,9 @@ export const validateId = (id) => {
 
 const newUserSchema = z.object({
 	name: z.string().min(1).max(20),
+	email: z.string().email(),
 	key: z.string().regex(/[A-F0-9]{8}/),
-	daily_hours: z.number().min(0).max(12),
-	email: z.string().email()
+	daily_hours: z.number().min(0).max(12)
 })
 
 export const validateNewUser = (user) => {
@@ -27,6 +27,7 @@ export const validateNewUser = (user) => {
 
 const updateUserSchema = z.object({
 	name: z.string().min(1).max(20),
+	email: z.string().email(),
 	key: z.string().regex(/[A-F0-9]{8}/),
 	daily_hours: z.number().min(0).max(12),
 	minutes: z.number()
@@ -38,7 +39,7 @@ export const validateUser = (user) => {
 
 const permissionSchema = z.object({
 	uid: z.string().regex(/[a-zA-z0-9]{28}/),
-	email: z.string().email(),
+	email: z.string().email()
 })
 
 export const validatePermission = (permission) => {

@@ -30,11 +30,11 @@ export const KeyModel = {
 					minutes: newMinutes,
 					last_reading: new Date(Date.now())
 				})
-				const mail = {
-					s: `LectorID - ${userData.name} fichó al salir`,
-					t: `El usuario [${userData.name}] fichó al salir. Se sumaron ${Math.floor(sessionTime / 60)}:${sessionTime % 60} horas, quedó un total de ${Math.floor(newMinutes / 60)}:${newMinutes % 60} horas trabajadas.`
-				}
-				sendMailHandler(mail)
+			const mail = {
+				s: `LectorID - ${userData.name} fichó al salir`,
+				t: `El usuario [${userData.name}] fichó al salir. Se sumaron ${Math.floor(sessionTime / 60)}:${sessionTime % 60} horas, quedó un total de ${Math.floor(newMinutes / 60)}:${newMinutes % 60} horas trabajadas.`
+			}
+			sendMailHandler(mail)
 			return { action: "bye" }
 		}
 		await db
@@ -44,11 +44,28 @@ export const KeyModel = {
 				is_active: true,
 				last_reading: new Date(Date.now())
 			})
-			const mail = {
-				s: `LectorID - ${userData.name} fichó al entrar`,
-				t: `El usuario [${userData.name}] fichó al entrar.`
-			}
-			sendMailHandler(mail)
+		const mail = {
+			s: `LectorID - ${userData.name} fichó al entrar`,
+			t: `El usuario [${userData.name}] fichó al entrar.`
+		}
+		sendMailHandler(mail)
 		return { action: "hello" }
+	},
+
+	createMovement: async ({ key }) => {
+		const user = await db.collection("users").where("key", "==", key).get()
+		if (user.empty || user.docs[0].data().enabled === false) {
+			const error = new Error("User not found")
+			error.statusCode = 404
+			throw error
+		}
+		const userData = user.docs[0].data()
+		const movement = {
+			user_id: user.docs[0].id,
+			movement: userData.is_active ? "bye" : "hello",
+			date: new Date(Date.now())
+		}
+		await db.collection("movements").add(movement)
+		return
 	}
 }

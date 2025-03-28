@@ -19,7 +19,7 @@ export const UserModel = {
 		return { action: "created" }
 	},
 
-	updateUserById: async ({ id, name, key, daily_hours, minutes = 0 }) => {
+	updateUserById: async ({ id, name, email, key, daily_hours, minutes = 0 }) => {
 		const user = await db.collection("users").doc(id).get()
 		if (user._fieldsProto === undefined) {
 			const error = new Error("User not found")
@@ -31,6 +31,7 @@ export const UserModel = {
 			.doc(id)
 			.update({
 				name: name || user.data().name,
+				email: email || user.data().email,
 				key: key || user.data().key,
 				daily_hours: daily_hours || user.data().daily_hours,
 				minutes: user.data().minutes + minutes

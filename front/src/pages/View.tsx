@@ -8,6 +8,7 @@ import {
 	formatTime,
 	formatUserTime
 } from "../utils/formatDates"
+import Calendar from "../assets/images/Calendar"
 
 const View = (): JSX.Element => {
 	const { userId } = useParams()
@@ -86,6 +87,9 @@ const View = (): JSX.Element => {
 						value={selectedDate}
 						onChange={(e) => setSelectedDate(e.target.value)}
 					/>
+					<span className='calendar'>
+						<Calendar />
+					</span>
 				</div>
 				<div className='list'>
 					{Object.entries(userMovements)

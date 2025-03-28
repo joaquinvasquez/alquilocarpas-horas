@@ -112,14 +112,42 @@
         top: 16px;
         width: 36px;
         height: 36px;
-        border: 1px solid $color-bw3;
+        border: 1px solid $color-bw4;
         border-radius: 50%;
-        background-color: $color-bw3;
+        background-color: transparent;
         color: transparent;
-        padding: 5px;
+        cursor: pointer;
+        z-index: 10;
 
         &::-webkit-calendar-picker-indicator {
-          font-size: 1.2rem;
+          font-size: 10rem;
+          cursor: pointer;
+        }
+
+        &:hover {
+          border: 1px solid $color1;
+
+          &~span.calendar>svg {
+            color: $color1;
+          }
+        }
+      }
+
+      span.calendar {
+        position: absolute;
+        right: 8px;
+        top: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 2px;
+        pointer-events: none;
+
+        z-index: 1 svg {
+          transform: scale(1.05);
         }
       }
 

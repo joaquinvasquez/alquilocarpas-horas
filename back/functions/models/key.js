@@ -1,5 +1,4 @@
 import { db } from "../firebase/config.js"
-import { sendMailHandler } from "../utils/send-email.js"
 
 export const KeyModel = {
 	setLastReaded: async ({ key }) => {
@@ -30,11 +29,6 @@ export const KeyModel = {
 					minutes: newMinutes,
 					last_reading: new Date(Date.now())
 				})
-			const mail = {
-				s: `LectorID - ${userData.name} fichó al salir`,
-				t: `El usuario [${userData.name}] fichó al salir. Se sumaron ${Math.floor(sessionTime / 60)}:${sessionTime % 60} horas, quedó un total de ${Math.floor(newMinutes / 60)}:${newMinutes % 60} horas trabajadas.`
-			}
-			sendMailHandler(mail)
 			return { action: "bye" }
 		}
 		await db
@@ -44,11 +38,6 @@ export const KeyModel = {
 				is_active: true,
 				last_reading: new Date(Date.now())
 			})
-		const mail = {
-			s: `LectorID - ${userData.name} fichó al entrar`,
-			t: `El usuario [${userData.name}] fichó al entrar.`
-		}
-		sendMailHandler(mail)
 		return { action: "hello" }
 	},
 

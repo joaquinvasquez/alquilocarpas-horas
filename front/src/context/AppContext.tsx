@@ -81,7 +81,14 @@ const AppProvider: FC<Props> = ({ children }) => {
 					const movementDate = formatDate(doc.data().date.toDate()) // Formatear la fecha
 					const movement = {
 						userId: doc.data().user_id,
-						type: doc.data().movement === "hello" ? "Entrada" : "Salida",
+						type:
+							doc.data().movement === "hello"
+								? "Entrada"
+								: doc.data().movement === "bye"
+									? "Salida"
+									: doc.data().movement === "bye - auto"
+										? "Salida automática - no fichó"
+										: "Desconocido",
 						date: doc.data().date.toDate()
 					}
 
@@ -93,17 +100,15 @@ const AppProvider: FC<Props> = ({ children }) => {
 				}
 
 				// Ordenar movimientos en cada fecha
-				const sortedMovements = Object.entries(groupedMovements)
-					.reduce(
-						(acc, [date, movements]) => {
-							acc[date] = movements.sort(
-								(a, b) =>
-									new Date(a.date).valueOf() - new Date(b.date).valueOf()
-							)
-							return acc
-						},
-						{} as Record<string, UserMovementsType[]>
-					)
+				const sortedMovements = Object.entries(groupedMovements).reduce(
+					(acc, [date, movements]) => {
+						acc[date] = movements.sort(
+							(a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf()
+						)
+						return acc
+					},
+					{} as Record<string, UserMovementsType[]>
+				)
 				setUserMovements(sortedMovements)
 			})
 		}

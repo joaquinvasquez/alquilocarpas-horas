@@ -19,6 +19,12 @@ export const dailyCheck = async () => {
 				await db.collection("users").doc(user.id).update({
 					is_active: false
 				})
+				const movement = {
+					user_id: user.id,
+					movement: "bye - auto",
+					date: new Date(Date.now())
+				}
+				await db.collection("movements").add(movement)
 				const mail = {
 					s: `LectorID - ${user.name} se fue sin fichar`,
 					t: `El usuario [${user.name}] quedó activado hoy, se olvidó de fichar al salir. Hay que restar manualmente el tiempo que pasó desde que se fue hasta las 21:00.`

@@ -1,16 +1,20 @@
 .view {
   height: calc(100dvh - $header-height);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
+  padding: 32px;
+
 
   .data {
     position: relative;
+    width: min(100%, 400px);
 
     .edit-btn {
       position: absolute;
-      top: -48px;
+      top: 6px;
       right: 0;
       width: 36px;
       height: 36px;
@@ -40,12 +44,11 @@
       font-size: 2rem;
       font-weight: 700;
       text-transform: capitalize;
-      margin-bottom: 24px;
     }
 
     .hours {
       font-size: 7rem;
-      margin-bottom: 32px;
+      margin-bottom: 16px;
       color: $color-green;
 
       &.neg {
@@ -63,10 +66,10 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 8px;
-      border-top: 1px solid $color-bw3;
+      border-block: 1px solid $color-bw3;
 
       button {
-        margin-top: 16px;
+        margin: 16px 0;
         padding: 8px 16px;
 
         &.hello {
@@ -75,12 +78,77 @@
 
         &.bye {
           background-color: $color-red;
+          margin-top: 0;
         }
 
         &[disabled] {
           background-color: $color-bw2;
           color: $color-bw3;
           cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+
+  .movements {
+    width: min(100%, 400px);
+    position: relative;
+    overflow: auto;
+
+    .movements-header {
+      position: sticky;
+      top: 0;
+      background-color: $color-bw1;
+      z-index: 1;
+
+      h2 {
+        padding: 16px 0;
+      }
+
+      input[type="date"] {
+        position: absolute;
+        right: 8px;
+        top: 16px;
+        width: 36px;
+        height: 36px;
+        border: 1px solid $color-bw3;
+        border-radius: 50%;
+        background-color: $color-bw3;
+        color: transparent;
+        padding: 5px;
+
+        &::-webkit-calendar-picker-indicator {
+          font-size: 1.2rem;
+        }
+      }
+
+    }
+
+    .list {
+      .date {
+        width: 100%;
+        margin-bottom: 8px;
+        text-align: right;
+        position: relative;
+        padding: 8px;
+
+        h3 {
+          text-align: left;
+          position: absolute;
+        }
+
+        .movement {
+          color: $color-bw3;
+
+          &:nth-child(odd) {
+            margin-bottom: 8px;
+          }
+        }
+
+        &.selected {
+          -webkit-animation: flash 1s both;
+          animation: flash 1s both;
         }
       }
     }
@@ -98,5 +166,33 @@
         font-size: 10rem;
       }
     }
+  }
+}
+
+@-webkit-keyframes flash {
+
+  0%,
+  50%,
+  100% {
+    background-color: $color-bw1;
+  }
+
+  25%,
+  75% {
+    background-color: $color-bw2;
+  }
+}
+
+@keyframes flash {
+
+  0%,
+  50%,
+  100% {
+    background-color: $color-bw1;
+  }
+
+  25%,
+  75% {
+    background-color: $color-bw2;
   }
 }

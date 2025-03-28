@@ -1,5 +1,6 @@
 .enroll-user {
   @extend .view;
+  justify-content: center;
   height: auto;
   position: absolute;
   top: 0;
@@ -10,7 +11,6 @@
 
   .logout {
     margin-top: 16px;
-    border-top: 1px solid $color-bw3;
     button {
       display: flex;
       align-items: center;

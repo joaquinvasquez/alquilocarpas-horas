@@ -1,36 +1,53 @@
-import { type JSX, useContext, useEffect } from "react"
+import { type JSX, useContext, useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import AppContext from "../context/AppContext"
 import Pencil from "../assets/images/Pencil"
-
-export const formatTime = (minutes = 0): string => {
-	const hours = Math.floor(Math.abs(minutes / 60))
-	const restMinutes = Math.abs(minutes % 60)
-	return minutes < 0
-		? `-${hours}:${restMinutes < 10 ? "0" : ""}${restMinutes}`
-		: `${hours}:${restMinutes < 10 ? "0" : ""}${restMinutes}`
-}
-
-export const formatDateTime = (userDate = ""): string => {
-	const date = new Date(userDate)
-	const day: string = `${date.getDate() < 10 ? "0" : ""}${date.getDate()}`
-	const month: string = `${date.getMonth() + 1 < 10 ? "0" : ""}${date.getMonth() + 1}`
-	const year: number = date.getFullYear()
-	const hours: string = `${date.getHours() < 10 ? "0" : ""}${date.getHours()}`
-	const minutes: string = `${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`
-	const seconds: string = `${date.getSeconds() < 10 ? "0" : ""}${date.getSeconds()}`
-	return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
-}
+import {
+	formatDateTime,
+	formatDateToInput,
+	formatTime,
+	formatUserTime
+} from "../utils/formatDates"
 
 const View = (): JSX.Element => {
 	const { userId } = useParams()
-	const { users, user, selectUser, readKey } = useContext(AppContext)
+	const { users, user, userMovements, selectUser, readKey } =
+		useContext(AppContext)
+	const [selectedDate, setSelectedDate] = useState<string>(
+		formatDateToInput(new Date().toString())
+	)
+	const movementsRef = useRef<Record<string, HTMLDivElement | null>>({})
+
+	const setMovementRef = (date: string, el: HTMLDivElement | null) => {
+		if (el) {
+			const [day, month, year] = date.split("/")
+			const formattedDate = `${year}-${month}-${day}`
+			movementsRef.current[formattedDate] = el
+		}
+	}
 
 	useEffect(() => {
 		if (userId) {
 			selectUser(userId)
 		}
 	}, [userId, users])
+
+	useEffect(() => {
+		const element = movementsRef.current[selectedDate] || null
+		if (element) {
+			element.scrollIntoView({
+				behavior: "smooth",
+				block: "center"
+			})
+			element.classList.add("selected")
+		}
+
+		return () => {
+			if (element) {
+				element.classList.remove("selected")
+			}
+		}
+	}, [selectedDate, userMovements])
 
 	return (
 		<div className='view'>
@@ -40,26 +57,56 @@ const View = (): JSX.Element => {
 				</Link>
 				<h1>{user?.name}</h1>
 				<div className={`hours ${user?.minutes && user?.minutes < 0 && "neg"}`}>
-					{formatTime(user?.minutes)}
+					{formatUserTime(user?.minutes)}
 				</div>
 				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
 				<div className='activate-user'>
-				<button
-					className='btn-clear hello'
-					onClick={() => readKey()}
-					disabled={user?.is_active}
-				>
-					Fichar entrada
-				</button>
-				<button
-					className='btn-clear bye'
-					onClick={() => readKey()}
-					disabled={!user?.is_active}
-				>
-					Fichar salida
-				</button>
+					<button
+						className='btn-clear hello'
+						onClick={() => readKey()}
+						disabled={user?.is_active}
+					>
+						Fichar entrada
+					</button>
+					<button
+						className='btn-clear bye'
+						onClick={() => readKey()}
+						disabled={!user?.is_active}
+					>
+						Fichar salida
+					</button>
+				</div>
 			</div>
+			<div className='movements'>
+				<div className='movements-header'>
+					<h2>Historial</h2>
+					<input
+						type='date'
+						value={selectedDate}
+						onChange={(e) => setSelectedDate(e.target.value)}
+					/>
+				</div>
+				<div className='list'>
+					{Object.entries(userMovements)
+						.sort()
+						.map(([date, movements]) => (
+							<div
+								key={date}
+								className='date'
+								ref={(el) => setMovementRef(date, el)}
+							>
+								<h3>{date}</h3>
+								{movements.map((movement, index) => (
+									<div key={index} className='movement'>
+										<p>
+											{formatTime(movement.date)} - {movement.type}
+										</p>
+									</div>
+								))}
+							</div>
+						))}
+				</div>
 			</div>
 		</div>
 	)

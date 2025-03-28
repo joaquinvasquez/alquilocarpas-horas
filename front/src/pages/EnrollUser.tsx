@@ -1,5 +1,5 @@
 import { useContext, type JSX } from "react"
-import { formatDateTime } from "./View"
+import { formatDateTime } from "../utils/formatDates"
 import AppContext from "../context/AppContext"
 import AuthContext from "../context/AuthContext"
 
@@ -11,9 +11,6 @@ const EnrollUser = (): JSX.Element => {
 		<div className='enroll-user'>
 			<div className='data'>
 				<h1>{user?.name}</h1>
-				{/* <div className={`hours ${user?.minutes && user?.minutes < 0 && "neg"}`}>
-					{formatTime(user?.minutes)}
-				</div> */}
 				<p>Horas diarias de trabajo: {user?.daily_hours}</p>
 				<p>Última vez que fichó: {formatDateTime(user?.last_reading)}</p>
 				<div className='activate-user'>

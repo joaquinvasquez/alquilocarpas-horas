@@ -14,9 +14,16 @@ export type UserType = {
 	email: string
 }
 
+export type UserMovementsType = {
+	userId: IdType
+	type: string
+	date: string
+}
+
 export interface AppContextType {
 	users: UserType[]
 	user: UserType | null
+	userMovements: Record<string, UserMovementsType[]>
 	selectUser: (userId: string) => void
 	lastKeyReaded: KeyType | null
 	readKey: () => Promise<void>

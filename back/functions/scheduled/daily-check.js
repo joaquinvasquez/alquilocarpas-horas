@@ -33,6 +33,12 @@ export const dailyCheck = async () => {
 			} else if (
 				Math.floor((Date.now() - user.last_reading.getTime()) / 60000) > 1440
 			) {
+				const movement = {
+					user_id: user.id,
+					movement: "not work",
+					date: new Date(Date.now())
+				}
+				await db.collection("movements").add(movement)
 				const mail = {
 					s: `LectorID - ${user.name} hoy no trabajó`,
 					t: `El usuario [${user.name}] hoy no fichó. En caso de que sea un error, hay que sumarle manualmente sus ${user.daily_hours} horas o el tiempo que haya trabajado hoy.`

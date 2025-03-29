@@ -160,6 +160,7 @@
         text-align: right;
         position: relative;
         padding: 8px;
+        min-height: 66px;
 
         h3 {
           text-align: left;
@@ -168,6 +169,10 @@
 
         .movement {
           color: $color-bw3;
+
+          &.red {
+            color: $color-red;
+          }
 
           &:nth-child(odd) {
             margin-bottom: 8px;

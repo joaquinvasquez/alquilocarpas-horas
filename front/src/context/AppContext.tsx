@@ -25,6 +25,13 @@ interface Props {
 	children: ReactNode
 }
 
+const movementMap: Record<string, string> = {
+	hello: "Entrada",
+	bye: "Salida",
+	"bye - auto": "Salida sin fichar",
+	"not work": "Sin asistencia"
+}
+
 const AppProvider: FC<Props> = ({ children }) => {
 	const [users, setUsers] = useState<UserType[]>([])
 	const [user, setUser] = useState<UserType | null>(null)
@@ -79,17 +86,11 @@ const AppProvider: FC<Props> = ({ children }) => {
 
 				for (const doc of querySnapshot.docs) {
 					const movementDate = formatDate(doc.data().date.toDate()) // Formatear la fecha
-					const movement = {
+					const movement: UserMovementsType = {
 						userId: doc.data().user_id,
-						type:
-							doc.data().movement === "hello"
-								? "Entrada"
-								: doc.data().movement === "bye"
-									? "Salida"
-									: doc.data().movement === "bye - auto"
-										? "Salida automática - no fichó"
-										: "Desconocido",
-						date: doc.data().date.toDate()
+						type: movementMap[doc.data().movement as string] || "Desconocido",
+						date: doc.data().date.toDate(),
+						red: doc.data().movement === 'bye - auto' || doc.data().movement === 'not work'
 					}
 
 					// Si la fecha no está en el objeto, la creamos

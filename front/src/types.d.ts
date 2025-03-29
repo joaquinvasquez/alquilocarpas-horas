@@ -18,6 +18,7 @@ export type UserMovementsType = {
 	userId: IdType
 	type: string
 	date: string
+	red: boolean
 }
 
 export interface AppContextType {

@@ -102,7 +102,7 @@ const View = (): JSX.Element => {
 							>
 								<h3>{date}</h3>
 								{movements.map((movement, index) => (
-									<div key={index} className='movement'>
+									<div key={index} className={`movement${movement.red ? " red" : ""}`}>
 										<p>
 											{formatTime(movement.date)} - {movement.type}
 										</p>
